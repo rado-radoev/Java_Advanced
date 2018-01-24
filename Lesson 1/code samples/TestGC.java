@@ -23,7 +23,7 @@ public class TestGC
     private static long stop;
     
     
-  public static void main(String args[]) 
+  public static void main(String[] args) 
   {
      
      System.out.println ("Begin timing.  Run jps to find lmvid, then run visualgc." );
