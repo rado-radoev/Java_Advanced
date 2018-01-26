@@ -13,8 +13,8 @@ public class BinarySearch {
 	    int high = a.length - 1; 
 
 	    while (low <= high) { 
-	    		int mid = low + ((high - low) / 2);
-	    		System.out.println("Middle is: " + mid);
+	    		int mid = (low + high) / 2;
+	    		System.out.println("Mid: " + mid);
 	    		int midVal = a[mid]; 
 	
     			if (midVal < key) {low = mid + 1;} 
@@ -47,7 +47,8 @@ public class BinarySearch {
 		System.out.println("Total execution time: " + (endTime - startTime) );
 		
 		System.out.println("Done");
-		nums[0] = 88;
+		nums[15203] = 88;
+		Arrays.parallelSort(nums);
 //		
 		
 		System.out.println(binarySearch(nums, 88));
