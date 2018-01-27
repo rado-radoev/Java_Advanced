@@ -1,18 +1,15 @@
 package com.binarySearchTest;
 
 import static org.junit.Assert.*;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.binarySearch.BinarySearch;
 
 public class BinarySearchTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
+	
 	@Test
-	public void test() {
+	public void testArrayNotNull() {
 		fail("Not yet implemented");
 	}
 
