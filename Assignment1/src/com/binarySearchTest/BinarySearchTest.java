@@ -9,8 +9,23 @@ public class BinarySearchTest {
 
 	
 	@Test
-	public void testArrayNotNull() {
-		fail("Not yet implemented");
-	}
+	 public void testBinarySearchBug(){
+		final int ERROR = 0;
+	          
+	    int[] vec = new int[Integer.MAX_VALUE / 2 + 2];
+	    vec[vec.length - 1] = 1;
+	    
+	  assertEquals(1073741824, BinarySearch.binarySearch(vec, 1), ERROR);
+	 }
+	
+	@Test
+	 public void testBinarySearchBugSuccess(){
+		final int ERROR = 0;
+	          
+	    int[] vec = new int[Integer.MAX_VALUE / 2 + 2];
+	    vec[vec.length - 1] = 1;
+	    
+	  assertEquals(1073741824, BinarySearch.binarySearch2(vec, 1), ERROR);
+	 }
 
 }
