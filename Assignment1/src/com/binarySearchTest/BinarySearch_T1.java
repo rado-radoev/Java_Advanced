@@ -1,4 +1,4 @@
-package com.binarySearch;
+package com.binarySearchTest;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
