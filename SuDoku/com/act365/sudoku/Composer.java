@@ -39,7 +39,7 @@ import java.util.* ;
 
 public class Composer extends Thread {
 
-    ArrayList<Grid> puzzles ;
+    List<Grid> puzzles ;
     
     GridContainer gridContainer ;
 
