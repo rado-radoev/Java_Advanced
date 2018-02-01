@@ -39,7 +39,7 @@ import java.util.* ;
 
 public class Composer extends Thread {
 
-    List<T> puzzles ;
+    List<Grid> puzzles ;
     
     GridContainer gridContainer;
 
@@ -393,7 +393,7 @@ public class Composer extends Thread {
                 }
             }
             lch.reset();
-            puzzles.addElement( puzzle );
+            puzzles.add( puzzle );
             if( output != null ){
                 if( xmlFormat ){
                     output.println( puzzle.toXML( 1 + nSolns , featuredGrades[category] ) );
@@ -529,7 +529,7 @@ public class Composer extends Thread {
             }
             if( gridContainer != null ){
                 if( puzzles.size() > 0 ){
-                    gridContainer.setGrid( (Grid) puzzles.elementAt( 0 ) );
+                    gridContainer.setGrid( (Grid) puzzles.get( 0 ) );
                 }
             } else {
                 if( xmlFormat && output != null ){
@@ -539,7 +539,7 @@ public class Composer extends Thread {
                     System.out.println( nSolns + " solutions found");
                     if( nSolns > 0 ){
                         System.out.println("Most complex: (" + maxPuzzleComplexity + ")");
-                        System.out.println( ((Grid) puzzles.elementAt( mostComplex ) ).toString() );
+                        System.out.println( ((Grid) puzzles.get( mostComplex ) ).toString() );
                     }
                 }
             }
