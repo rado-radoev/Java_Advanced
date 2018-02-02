@@ -34,6 +34,7 @@ import java.util.ArrayList ;
  * as LinearSystemState.
  */
 
+// RR - Changed StateStack to extend generic ArrayList of Objects instead a raw Vector
 public class StateStack extends ArrayList<Object> {
 
     int nMovesStored ;

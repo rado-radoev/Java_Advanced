@@ -64,10 +64,14 @@ public abstract class MaskFactory implements Enumeration {
                     sectorMax ;
     
     static Random random ;
-    
+
+    // RR - Modified comment (vector - to array, added @param)
     /**
      * Iterates sequentially through all possible settings of the array x,
      * which has elements xMin[i] <= x[i] <= xMax[i].
+     * @param x the array to iterate through all settings 
+     * @param xMin array to store all elements less then x[i]
+     * @param xMax array to store all elements greater then x[i]
      */
     
     static void iterate( int[] x , int[] xMin , int[] xMax ){
@@ -81,9 +85,12 @@ public abstract class MaskFactory implements Enumeration {
         }
     }
     
+    // RR - Modified comment (vector - to array, added @param)
     /**
      * Iterates sequentially through all possible settings of the array x,
      * which has elements that satisfy Sum(x[i]) = xSum.
+     * @param x the array to iterate through all settings 
+     * @param xSum the sum that will be compared to the sum of all x[i]
      */
     
     static void iterate( int[] x , int xSum ){
@@ -105,9 +112,13 @@ public abstract class MaskFactory implements Enumeration {
         }
     }
     
+    // RR - Modified comment (vector - to array, added @param)
     /**
      * Randomly allocates to the array x, which has elements 
      * xMin[i] <= x[i] <= xMax[i].
+     * @param x empty array that will contain elements from xMin and xMax arrays
+     * @param xMin array that holds elements less then x[i]
+     * @param xMax array that holds elements greater then x[i]
      */
     
     static void randomlyAllocate( int[] x , int[] xMin , int[] xMax ){
@@ -125,8 +136,11 @@ public abstract class MaskFactory implements Enumeration {
         }
     }
 
+    // RR - Modified comment (vector - to array, added @param)
     /**
      * Randomly allocates to the array x, which has elements with Sum(x[i]) = xSum.
+     * @param x an empty array that will contain elements with Sum(x[i]) = xSum
+     * @param xSum the sum to compare array elements sum to
      */
     
     static void randomlyAllocate( int[] x , int xSum ){
@@ -144,7 +158,7 @@ public abstract class MaskFactory implements Enumeration {
      * position, which is usually some distance from the masks that are 
      * likely to lead to successful puzzles.
      * @param cellsInRow size of grid
-     * @param filledCells number of true elements to appear in mask
+     * // RR - wrong parameter was used --> filledCells number of true elements to appear in mask
      * @throws Exception thrown if cellsInRow and filledCells are incompatible
      */
     
@@ -213,13 +227,14 @@ public abstract class MaskFactory implements Enumeration {
         initiate( s );
     }
 */
+    // RR - removed parameters as method was commented out
     /**
      * Creates a new MaskFactory. The sequence will start from a mask with
      * uniformly-distributed filled cells.
-     * @param cellsInRow size of grid
-     * @param filledCells number of true elements to appear in mask
-     * @param boxesAcross grid dimension
-     * @throws Exception thrown if cellsInRow and filledCells are incompatible
+     * //@param cellsInRow size of grid
+     * //@param filledCells number of true elements to appear in mask
+     * //@param boxesAcross grid dimension
+     * //@throws Exception thrown if cellsInRow and filledCells are incompatible
      */
 /*    
     public MaskFactory( int cellsInRow , 

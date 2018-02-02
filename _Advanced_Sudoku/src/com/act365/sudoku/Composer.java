@@ -39,6 +39,7 @@ import java.util.* ;
 
 public class Composer extends Thread {
 
+	// RR - Modified Vector to generic List interface
     List<Grid> puzzles ;
     
     GridContainer gridContainer;
@@ -111,7 +112,6 @@ public class Composer extends Thread {
     
     transient long startTime ;
     
-    
     /**
      * Generates a new thread that will attempt to construct a Su Doku
      * puzzle with 'maskSize' cells on initial display. The puzzle will
@@ -180,6 +180,7 @@ public class Composer extends Thread {
         isStartable = new boolean[nSolvers];
         solverMasks = new boolean[nSolvers][cellsInRow][cellsInRow];
         solverGrids = new Grid[nSolvers];
+        // RR - created new generic ArrayList of Grid and assigned to puzzle
         puzzles = new ArrayList<Grid>();
         lch = new LeastCandidatesHybrid( false , true , false , true , explain );
         logicalFilter = guessFilter == -1 || 
@@ -393,6 +394,7 @@ public class Composer extends Thread {
                 }
             }
             lch.reset();
+            // RR - changed addElement to ArrayList add
             puzzles.add( puzzle );
             if( output != null ){
                 if( xmlFormat ){
@@ -529,6 +531,7 @@ public class Composer extends Thread {
             }
             if( gridContainer != null ){
                 if( puzzles.size() > 0 ){
+                		// RR - changed elementAt to ArrayList get
                     gridContainer.setGrid( (Grid) puzzles.get( 0 ) );
                 }
             } else {
@@ -539,6 +542,7 @@ public class Composer extends Thread {
                     System.out.println( nSolns + " solutions found");
                     if( nSolns > 0 ){
                         System.out.println("Most complex: (" + maxPuzzleComplexity + ")");
+                        // RR - changed elementAt to ArrayList get
                         System.out.println( ((Grid) puzzles.get( mostComplex ) ).toString() );
                     }
                 }

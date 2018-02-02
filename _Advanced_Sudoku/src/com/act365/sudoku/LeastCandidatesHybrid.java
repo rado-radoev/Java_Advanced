@@ -172,7 +172,8 @@ public class LeastCandidatesHybrid extends StrategyBase implements IStrategy {
      * Sets up a LeastCandidatesHybrid II strategy with an optional random element.
      * @param randomize whether the final candidates should be chosen randomly from its peers
      * @param updateInvulnerableState indicates whether the moves should be post-filtered using the Invulnerable state grid.
-     * @param updateLinearState indicates whether the LinearStateGrid should be updated
+     // RR - Updated parameter non-existing parameter was used
+     * @param updateLinearSystemState indicates whether the LinearStateGrid should be updated
      * @param useAllLogicalMethods whether the solver should look for X-Wings and Nishio
      * @param explain whether explanatory debug should be produced
      */    
