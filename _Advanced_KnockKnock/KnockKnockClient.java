@@ -7,7 +7,7 @@ public class KnockKnockClient {
         Socket kkSocket = null;
         PrintWriter out = null;
         BufferedReader in = null;
-	String laptopName = "BLULAD770100";
+        String laptopName = "lamercho";
 
         try {
             kkSocket = new Socket(laptopName, 4444);
