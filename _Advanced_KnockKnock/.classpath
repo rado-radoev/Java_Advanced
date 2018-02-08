@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="KKMultiServer/|network/" kind="src" path=""/>
+	<classpathentry kind="src" path="KKMultiServer"/>
+	<classpathentry kind="src" path="network"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
