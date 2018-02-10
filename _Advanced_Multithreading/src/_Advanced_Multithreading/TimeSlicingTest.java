@@ -10,10 +10,34 @@ public class TimeSlicingTest {
 		Thread bar = new ShowThread("Bar");
 		bar.setPriority(Thread.MAX_PRIORITY);
 		bar.start();
+		
+		// catch uncought exceptions
+		bar.setUncaughtExceptionHandler( new Thread.UncaughtExceptionHandler() {
+			
+			@Override
+			public void uncaughtException(Thread t, Throwable e) {
+				System.err.println(t + " threw exception: " + e);
+				
+			}
+		});
 	}
 	
 	static class ShowThread extends Thread {
-		String message;
+		private volatile String message;
+		String getMessage() {
+			String result = message;
+			
+			if (result == null) { // First check (no locking)
+				synchronized (this) {
+					result = message;
+					if (result == null) { // Second check (with locking)
+						message = result = "";
+					}
+				}
+			}
+			
+			return result;
+		}
 		
 		ShowThread(String message) {
 			this.message = message;
