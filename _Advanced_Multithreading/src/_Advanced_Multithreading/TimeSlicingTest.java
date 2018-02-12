@@ -24,7 +24,7 @@ public class TimeSlicingTest {
 	
 	static class ShowThread extends Thread {
 		private volatile String message;
-		String getMessage() {
+			String getMessage() {
 			String result = message;
 			
 			if (result == null) { // First check (no locking)
