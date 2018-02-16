@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class KKMultiServer {
-    
+	
+	ServerSocket serverSocket = null;
     boolean listening = true;
     
     
@@ -16,17 +17,29 @@ public class KKMultiServer {
     
     public void startServer() {
         System.out.println("Server starting...");
-        try (ServerSocket serverSocket = new ServerSocket(4444) )
-        {
+        try {
+            serverSocket = new ServerSocket(4444);
             System.out.println("Server started. Listening on port: " + serverSocket.getLocalPort());
-            
-            while (listening) {
+        } catch (IOException e) {
+            System.err.println("Could not listen on port: 4444.");
+            System.exit(-1);
+        }
+        
+        
+       while (listening) {
+            try {
                 new KKMultiServerThread(serverSocket.accept()).start();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-       }            
-	   catch (IOException e) {
-	       System.err.println("Could not listen on port: 4444.");
-	       System.exit(-1);
-	   }     
+       }
+    }
+    
+    public void closeServer() {
+        try {
+            serverSocket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
