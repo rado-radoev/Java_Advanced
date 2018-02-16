@@ -16,14 +16,7 @@ public class KKMultiServer {
     }
     
     public void startServer() {
-        System.out.println("Server starting...");
-        try {
-            serverSocket = new ServerSocket(4444);
-            System.out.println("Server started. Listening on port: " + serverSocket.getLocalPort());
-        } catch (IOException e) {
-            System.err.println("Could not listen on port: 4444.");
-            System.exit(-1);
-        }
+        setServerSocket(4444);
         
         
        while (listening) {
@@ -40,6 +33,21 @@ public class KKMultiServer {
             serverSocket.close();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    
+    public int getServerPort() {
+    		return serverSocket.getLocalPort();
+    }
+    
+    private void setServerSocket(int port) {
+        System.out.println("Server starting...");
+        try {
+        		serverSocket = new ServerSocket(port);
+            System.out.println("Server started. Listening on port: " + getServerPort());
+        } catch (IOException e) {
+            System.err.println("Could not listen on port:" + getServerPort() + " .");
         }
     }
 }
