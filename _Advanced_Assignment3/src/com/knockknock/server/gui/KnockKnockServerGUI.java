@@ -13,6 +13,7 @@ import com.knockknock.server.KKMultiServer;
 
 public class KnockKnockServerGUI extends JFrame {
 
+	private static final long serialVersionUID = 6995715762008339632L;
 	private final JPanel mainPanel;
 	private final JButton startServer;
 	private final JButton stopServer;
@@ -24,6 +25,9 @@ public class KnockKnockServerGUI extends JFrame {
 	private KKMultiServer server;
 	
 	public KnockKnockServerGUI() {
+		
+		server = new KKMultiServer();
+		
 		mainLayout = new BorderLayout();
 		mainPanel = new JPanel(mainLayout);
 		
@@ -35,13 +39,15 @@ public class KnockKnockServerGUI extends JFrame {
 		stopServer.addActionListener(buttonHandler);
 		buttonPanel = new JPanel(buttonLayout);
 		
-
-		
-		
+		buttonPanel.add(startServer);
+		buttonPanel.add(stopServer);
 		
 		statusLabel = new JLabel("The status will be shown here: ");
 		
+		mainPanel.add(buttonPanel, BorderLayout.CENTER);
+		mainPanel.add(statusLabel, BorderLayout.SOUTH);
 		
+		add(mainPanel);
 		
 	}
 	
@@ -52,16 +58,35 @@ public class KnockKnockServerGUI extends JFrame {
 			if (e.getSource() == startServer) {
 				server.startServer();
 				startServer.setEnabled(false);
+				statusLabel.setText("");
 				statusLabel.setText("Server started. Listening on port: "  + server.getServerPort());
 			}
 			else if (e.getSource() == stopServer) {
 				server.closeServer();
 				startServer.setEnabled(true);
 				stopServer.setEnabled(true);
+				statusLabel.setText("");
 				statusLabel.setText("Servet stopped");
 			}
 		}
 		
 	}
 	
+	public static void main(String[] args) {
+		KnockKnockServerGUI gui = new KnockKnockServerGUI();
+		
+		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gui.setSize(450, 350);
+		gui.setVisible(true);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
