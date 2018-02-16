@@ -25,6 +25,7 @@ public class KnockKnockServerGUI extends JFrame {
 	private KKMultiServer server;
 	
 	public KnockKnockServerGUI() {
+		super("Knock Knock Server");
 		
 		server = new KKMultiServer();
 		
