@@ -19,13 +19,13 @@ public class KKMultiServer {
         setServerSocket(4444);
         
         
-       while (listening) {
+       //while (listening) {
             try {
-                new KKMultiServerThread(serverSocket.accept()).start();
+                new KKMultiServerThread(serverSocket.accept());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-       }
+      // }
     }
     
     public void closeServer() {

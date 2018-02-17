@@ -1,6 +1,7 @@
 package com.knockknock.server.gui;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,6 +13,12 @@ import java.awt.event.ActionListener;
 import com.knockknock.server.KKMultiServer;
 
 public class KnockKnockServerGUI extends JFrame {
+	
+	// TO DO: ADD MENU TO ADD CLIENTS
+	// EACH NEW CLIENT WILL BE RECORDED IN A LABEL
+	// KEEP TRACK OF RUNNING CLIENTS
+	
+	// FIX WHILE LOOP IN KKMULTI THRED - IT IS LOCKING UP THE GUI 
 
 	private static final long serialVersionUID = 6995715762008339632L;
 	private final JPanel mainPanel;
@@ -57,8 +64,15 @@ public class KnockKnockServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
-				server.startServer();
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						server.startServer();
+					}
+				});
 				startServer.setEnabled(false);
+				stopServer.setEnabled(true);
 				statusLabel.setText("");
 				statusLabel.setText("Server started. Listening on port: "  + server.getServerPort());
 			}

@@ -8,11 +8,10 @@ import java.net.Socket;
 
 import com.knockknock.protocol.KnockKnockProtocol;
 
-public class KKMultiServerThread extends Thread {
+public class KKMultiServerThread implements Runnable {
     private Socket socket = null;
 
     public KKMultiServerThread(Socket socket) {
-		super("KKMultiServerThread");
 		this.socket = socket;
     }
 
