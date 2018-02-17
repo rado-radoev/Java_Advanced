@@ -34,8 +34,6 @@ public class KnockKnockServerGUI extends JFrame {
 	public KnockKnockServerGUI() {
 		super("Knock Knock Server");
 		
-		server = new KKMultiServer();
-		
 		mainLayout = new BorderLayout();
 		mainPanel = new JPanel(mainLayout);
 		
@@ -68,6 +66,7 @@ public class KnockKnockServerGUI extends JFrame {
 					
 					@Override
 					public void run() {
+						server = new KKMultiServer();
 						server.startServer();
 					}
 				});

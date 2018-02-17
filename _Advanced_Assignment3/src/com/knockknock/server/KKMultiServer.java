@@ -18,14 +18,12 @@ public class KKMultiServer {
     public void startServer() {
         setServerSocket(4444);
         
-        
-       //while (listening) {
-            try {
-                new KKMultiServerThread(serverSocket.accept());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-      // }
+        try {
+            new KKMultiServerThread(serverSocket.accept());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
     
     public void closeServer() {
@@ -38,7 +36,7 @@ public class KKMultiServer {
     
     
     public int getServerPort() {
-    		return serverSocket.getLocalPort();
+    		return this.serverSocket.getLocalPort();
     }
     
     private void setServerSocket(int port) {
