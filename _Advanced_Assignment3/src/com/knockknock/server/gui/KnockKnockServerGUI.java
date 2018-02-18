@@ -65,7 +65,7 @@ public class KnockKnockServerGUI extends JFrame {
 			if (e.getSource() == startServer) {
 				server = new KKMultiServer();
 				
-				new Thread(server);
+				new Thread(server).start();
 				
 				startServer.setEnabled(false);
 				stopServer.setEnabled(true);
@@ -75,7 +75,7 @@ public class KnockKnockServerGUI extends JFrame {
 			else if (e.getSource() == stopServer) {
 				server.closeServer();
 				startServer.setEnabled(true);
-				stopServer.setEnabled(true);
+				stopServer.setEnabled(false);
 				statusLabel.setText("");
 				statusLabel.setText("Servet stopped");
 			}
