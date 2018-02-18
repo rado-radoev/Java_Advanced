@@ -3,23 +3,28 @@ package com.knockknock.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class KKMultiServer {
+public class KKMultiServer implements Runnable {
 	
 	ServerSocket serverSocket = null;
     boolean listening = true;
     
     
-    public static void main(String[] args) throws IOException {
-        KKMultiServer server = new KKMultiServer();
-        
-        server.startServer();
+//    public static void main(String[] args) throws IOException {
+//        KKMultiServer server = new KKMultiServer();
+//        
+//        server.startServer();
+//    }
+    
+    @Override
+    public void run() {
+    		startServer();
     }
     
     public void startServer() {
         setServerSocket(4444);
         
         try {
-            new KKMultiServerThread(serverSocket.accept());
+            new KKMultiServerThread(serverSocket.accept()).start();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

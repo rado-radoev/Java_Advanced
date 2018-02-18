@@ -8,16 +8,17 @@ import java.net.Socket;
 
 import com.knockknock.protocol.KnockKnockProtocol;
 
-public class KKMultiServerThread implements Runnable {
+public class KKMultiServerThread extends Thread {
     private Socket socket = null;
 
     public KKMultiServerThread(Socket socket) {
+    		super("KMMultiServerThread");
 		this.socket = socket;
     }
 
     @Override
     public void run() {
-       	
+    	      	
         try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 

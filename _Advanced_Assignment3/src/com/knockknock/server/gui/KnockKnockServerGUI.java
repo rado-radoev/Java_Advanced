@@ -2,6 +2,7 @@ package com.knockknock.server.gui;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -62,14 +63,10 @@ public class KnockKnockServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
-				SwingUtilities.invokeLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						server = new KKMultiServer();
-						server.startServer();
-					}
-				});
+				server = new KKMultiServer();
+				
+				new Thread(server);
+				
 				startServer.setEnabled(false);
 				stopServer.setEnabled(true);
 				statusLabel.setText("");
