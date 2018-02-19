@@ -17,10 +17,6 @@ public class KKMultiServer implements Runnable {
     
     @Override
     public void run() {
-    		startServer();
-    }
-    
-    public void startServer() {
         setServerSocket(4444);
         
         try {

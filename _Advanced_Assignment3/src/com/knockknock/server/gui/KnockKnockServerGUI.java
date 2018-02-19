@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +73,7 @@ public class KnockKnockServerGUI extends JFrame {
 			if (e.getSource() == startServer) {
 				server = new KKMultiServer();
 				
+				
 				pool.execute(server);
 				
 				//new Thread(server).start();
@@ -82,11 +85,11 @@ public class KnockKnockServerGUI extends JFrame {
 			}
 			else if (e.getSource() == stopServer) {
 				shutdownAndAwaitTermination(pool);
-				//server.closeServer();
+				server.closeServer();
 				startServer.setEnabled(true);
 				stopServer.setEnabled(false);
 				statusLabel.setText("");
-				statusLabel.setText("Servet stopped");
+				statusLabel.setText("Server stopped");
 			}
 		}
 		
