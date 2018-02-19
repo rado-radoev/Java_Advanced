@@ -24,7 +24,8 @@ public class KKMultiServer implements Runnable {
         setServerSocket(4444);
         
         try {
-            new KKMultiServerThread(serverSocket.accept()).start();
+        		while (listening)
+        			new KKMultiServerThread(serverSocket.accept()).start();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
