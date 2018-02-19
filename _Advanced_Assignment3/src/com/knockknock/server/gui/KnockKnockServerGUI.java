@@ -72,8 +72,7 @@ public class KnockKnockServerGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
 				server = new KKMultiServer();
-				
-				
+
 				pool.execute(server);
 				
 				//new Thread(server).start();

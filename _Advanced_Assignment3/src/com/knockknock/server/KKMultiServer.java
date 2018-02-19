@@ -38,7 +38,7 @@ public class KKMultiServer implements Runnable {
     
     
     public int getServerPort() {
-    		return this.serverSocket.getLocalPort();
+    		return serverSocket.getLocalPort();
     }
     
     private void setServerSocket(int port) {
