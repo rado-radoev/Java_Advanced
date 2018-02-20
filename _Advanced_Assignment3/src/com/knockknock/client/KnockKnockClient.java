@@ -13,7 +13,7 @@ public class KnockKnockClient {
     private Socket kkSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private String laptopName;
+    private String laptopName; 
     
 	public KnockKnockClient() {
 	    	try {

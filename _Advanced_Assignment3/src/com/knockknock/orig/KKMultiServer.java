@@ -37,22 +37,4 @@ public class KKMultiServer implements Runnable {
 			e.printStackTrace();
 		}	
 	}
-	
-//    public static void main(String[] args) throws IOException {
-//        ServerSocket serverSocket = null;
-//        boolean listening = true;
-//        System.out.println("Server starting...");
-//
-//        try {
-//            serverSocket = new ServerSocket(4444);
-//        } catch (IOException e) {
-//            System.err.println("Could not listen on port: 4444.");
-//            System.exit(-1);
-//        }
-//
-//        while (listening)
-//	       new KKMultiServerThread(serverSocket.accept()).start();
-//
-//        serverSocket.close();
-//    }
 }

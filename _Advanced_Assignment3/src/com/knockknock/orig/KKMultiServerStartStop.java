@@ -13,12 +13,8 @@ public class KKMultiServerStartStop {
 		ExecutorService exec = Executors.newCachedThreadPool();
 		exec.execute(kmms);
 		
-		
-		
-		kmms.listening = false;
-		exec.shutdown();
-		
-
+		//kmms.listening = false;
+		//exec.shutdown();
 	}
 
 }

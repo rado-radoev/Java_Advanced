@@ -9,7 +9,7 @@ public class KnockKnockClient {
         Socket kkSocket = null;
         PrintWriter out = null;
         BufferedReader in = null;
-	String laptopName = "lamercho";
+        String laptopName = InetAddress.getLocalHost().getHostName();
 
         try {
             kkSocket = new Socket(laptopName, 4444);

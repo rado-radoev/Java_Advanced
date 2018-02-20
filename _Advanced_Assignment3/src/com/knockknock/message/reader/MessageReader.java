@@ -26,10 +26,10 @@ public class MessageReader {
 			String line = reader.readLine();
 			
 			while (line != null) {
-				System.out.println(line);
+				//System.out.println(line);
 				line = reader.readLine();
 			}
-			
+			 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

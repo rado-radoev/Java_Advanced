@@ -42,7 +42,7 @@ public class KnockKnockServerGUI extends JFrame {
 	
 	public KnockKnockServerGUI() {
 		super("Knock Knock Server");
-		
+		 
 		server = new KKMultiServer();
 		pool = Executors.newCachedThreadPool();
 		
