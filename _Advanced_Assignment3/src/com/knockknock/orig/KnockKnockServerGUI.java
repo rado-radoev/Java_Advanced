@@ -1,4 +1,4 @@
-package com.knockknock.server.gui;
+package com.knockknock.orig;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -16,8 +16,6 @@ import java.security.KeyManagementException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import com.knockknock.server.KKMultiServer;
 
 public class KnockKnockServerGUI extends JFrame {
 	
@@ -73,7 +71,6 @@ public class KnockKnockServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
-				server.setListening(true);
 				
 				pool.execute(new Runnable() {
 					
@@ -82,6 +79,7 @@ public class KnockKnockServerGUI extends JFrame {
 						try {
 							server.start();
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -89,16 +87,14 @@ public class KnockKnockServerGUI extends JFrame {
 				
 				startServer.setEnabled(false);
 				stopServer.setEnabled(true);
-				statusLabel.setText("");
-				//statusLabel.setText("Server started. Listening on port: "  + server.getServerPort());
 			}
 			else if (e.getSource() == stopServer) {
-				server.setListening(false);
-
 				try {
-					server.closeSocketConnection();
-					pool.awaitTermination(10, TimeUnit.SECONDS);
-				} catch (InterruptedException e1) {
+					server.listening = false;
+					pool.awaitTermination(2, TimeUnit.SECONDS);
+					server.serverSocket.close();
+				} catch (InterruptedException | IOException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				startServer.setEnabled(true);
@@ -109,24 +105,6 @@ public class KnockKnockServerGUI extends JFrame {
 		}
 		
 	}
-	
-	void shutdownAndAwaitTermination(ExecutorService pool) {
-		   pool.shutdown(); // Disable new tasks from being submitted
-		   try {
-		     // Wait a while for existing tasks to terminate
-		     if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-		       pool.shutdownNow(); // Cancel currently executing tasks
-		       // Wait a while for tasks to respond to being cancelled
-		       if (!pool.awaitTermination(60, TimeUnit.SECONDS))
-		           System.err.println("Pool did not terminate");
-		     }
-		   } catch (InterruptedException ie) {
-		     // (Re-)Cancel if current thread also interrupted
-		     pool.shutdownNow();
-		     // Preserve interrupt status
-		     Thread.currentThread().interrupt();
-		   }
-		 }
 	
 	public static void main(String[] args) {
 		KnockKnockServerGUI gui = new KnockKnockServerGUI();

@@ -19,7 +19,7 @@ public class KnockKnockProtocol {
                                  "Is there an owl in here?",
                                  "Is there an echo in here?" };
     
-    private int currentJoke = new SecureRandom().nextInt(clues.size() + 1);
+    private int currentJoke = new SecureRandom().nextInt(clues.size());
 
     public String processInput(String theInput) {
         String theOutput = null;
@@ -53,10 +53,10 @@ public class KnockKnockProtocol {
                 if (theInput.equalsIgnoreCase("y")) {
                     theOutput = "Knock! Knock!";
                     
-                    int newJoke = new SecureRandom().nextInt(clues.size() + 1);
+                    int newJoke = new SecureRandom().nextInt(clues.size());
                  
                     if (currentJoke == newJoke)
-                        currentJoke = new SecureRandom().nextInt(clues.size() + 1);
+                        currentJoke = new SecureRandom().nextInt(clues.size());
                     else
                         currentJoke = newJoke;
                     state = State.SENTKNOCKKNOCK;
