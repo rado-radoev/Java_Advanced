@@ -15,28 +15,12 @@ public class MessageReader {
 	
 	private File file;
 
-	public MessageReader() {	}
-	
+
 	public MessageReader(ResponseFiles responseFile) {
 		getFilePath(responseFile);
-		
-		try (FileInputStream fis = new FileInputStream(file);
-				BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
-			
-			String line = reader.readLine();
-			
-			while (line != null) {
-				//System.out.println(line);
-				line = reader.readLine();
-			}
-			 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+
 	}
-	
-	
+
 	private final void getFilePath(ResponseFiles fileToGet) {
 		String packagePath = "/com/knockknock/message";
 		
@@ -47,16 +31,14 @@ public class MessageReader {
 	}
 
 
-	public ArrayList<String> textToStringArray () {
-		ArrayList<String> output = new ArrayList<String>();
-		MessageReader cluesReader = new MessageReader();
-		cluesReader.getFilePath(ResponseFiles.ANSWERS);
+	public List<String> readFile() {
+		List<String> output = new ArrayList<String>();
 		
-
-		try (FileInputStream fis = new FileInputStream(cluesReader.file);
+		try (FileInputStream fis = new FileInputStream(file);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
 			
 			String line = reader.readLine();
+			output.add(line);
 			
 			while (line != null) {
 				output.add(line);

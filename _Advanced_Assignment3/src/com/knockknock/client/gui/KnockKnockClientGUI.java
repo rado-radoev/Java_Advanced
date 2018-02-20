@@ -15,6 +15,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.knockknock.client.KnockKnockClient;
+
 public class KnockKnockClientGUI extends JFrame {
 
 	private final JPanel mainPanel;
@@ -24,11 +26,13 @@ public class KnockKnockClientGUI extends JFrame {
 	private final JTextArea textArea;
 	private final JLabel statusLabel;
 	private final JScrollPane textAreaScrollPane;
+	private final KnockKnockClient client;
 	
 	public KnockKnockClientGUI() {
 		super("Knock Knock Client");
 		
 		mainPanel = new JPanel(new BorderLayout());
+		client = new KnockKnockClient();
 		
 		textArea = new JTextArea();
 		textArea.setEditable(false);
@@ -48,7 +52,7 @@ public class KnockKnockClientGUI extends JFrame {
 		
 		textField = new JTextField(10);
 		
-		statusLabel = new JLabel("Connected to: SERVER on Port: PORT");
+		statusLabel = new JLabel("Connected");
 		senderPanel.add(textField);
 		senderPanel.add(sendButton);
 		senderPanel.add(statusLabel);

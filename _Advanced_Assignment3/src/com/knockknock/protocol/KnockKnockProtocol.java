@@ -1,7 +1,7 @@
 package com.knockknock.protocol;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
+import java.util.List;
 
 import com.knockknock.message.reader.MessageReader;
 import com.knockknock.message.reader.ResponseFiles;
@@ -10,14 +10,8 @@ public class KnockKnockProtocol {
 
     private State state = State.WAITING;
     
-    private final ArrayList<String> clues = new MessageReader(ResponseFiles.CLUES).textToStringArray();
-    private final ArrayList<String> answers = new MessageReader(ResponseFiles.ANSWERS).textToStringArray();
-    private final String[] clues1 = { "Turnip", "Little Old Lady", "Atch", "Who", "Who" };
-    private final String[] answers1 = { "Turnip the heat, it's cold in here!",
-                                 "I didn't know you could yodel!",
-                                 "Bless you!",
-                                 "Is there an owl in here?",
-                                 "Is there an echo in here?" };
+    private final List<String> clues = new MessageReader(ResponseFiles.CLUES).readFile();
+    private final List<String> answers = new MessageReader(ResponseFiles.ANSWERS).readFile();
     
     private int currentJoke = new SecureRandom().nextInt(clues.size());
 

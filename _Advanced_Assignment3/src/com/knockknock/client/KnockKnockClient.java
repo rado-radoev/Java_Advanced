@@ -13,12 +13,12 @@ public class KnockKnockClient {
     private Socket kkSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private String laptopName; 
+    private String hostname; 
     
 	public KnockKnockClient() {
 	    	try {
     		    setLaptopName(InetAddress.getLocalHost().getHostName());
-            kkSocket = new Socket(laptopName, 4444);
+            kkSocket = new Socket(hostname, 4444);
             out = new PrintWriter(kkSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
         } catch (UnknownHostException e) {
@@ -31,11 +31,11 @@ public class KnockKnockClient {
     }
 	
     public String getLaptopName() {
-		return laptopName;
+		return hostname;
 	}
 
 	public final void setLaptopName(String laptopName) {
-		this.laptopName = laptopName;
+		this.hostname = laptopName;
 	}
 	
 	public void readValue() {
@@ -59,9 +59,10 @@ public class KnockKnockClient {
 		} 
 	}
 	
+	
     public void closeCleanup() {
 	    try {
-	    		out.close();
+    		out.close();
 			in.close();
 			kkSocket.close();
 		} catch (IOException e) {
