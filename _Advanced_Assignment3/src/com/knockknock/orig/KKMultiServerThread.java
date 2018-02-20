@@ -1,10 +1,6 @@
-package com.knockknock.server;
-
+package com.knockknock.orig;
 
 import java.net.*;
-
-import com.knockknock.protocol.KnockKnockProtocol;
-
 import java.io.*;
 
 public class KKMultiServerThread extends Thread {
@@ -43,4 +39,3 @@ public class KKMultiServerThread extends Thread {
 	}
     }
 }
-

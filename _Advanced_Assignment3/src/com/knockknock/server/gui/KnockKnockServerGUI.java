@@ -12,11 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.security.KeyManagementException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import com.knockknock.server.KKMultiServer;
+import com.knockknock.server.KKMultiServer_1;
 
 public class KnockKnockServerGUI extends JFrame {
 	
@@ -41,6 +43,7 @@ public class KnockKnockServerGUI extends JFrame {
 	public KnockKnockServerGUI() {
 		super("Knock Knock Server");
 		
+		server = new KKMultiServer();
 		pool = Executors.newCachedThreadPool();
 		
 		mainLayout = new BorderLayout();
@@ -71,20 +74,19 @@ public class KnockKnockServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
-				server = new KKMultiServer();
-
+					
 				pool.execute(server);
-				
-				//new Thread(server).start();
 				
 				startServer.setEnabled(false);
 				stopServer.setEnabled(true);
 				statusLabel.setText("");
-				statusLabel.setText("Server started. Listening on port: "  + server.getServerPort());
+				//statusLabel.setText("Server started. Listening on port: "  + server.getServerPort());
 			}
 			else if (e.getSource() == stopServer) {
-				shutdownAndAwaitTermination(pool);
-				server.closeServer();
+				
+				server.setListening(false);
+				//server.closeServer();
+				pool.shutdownNow();
 				startServer.setEnabled(true);
 				stopServer.setEnabled(false);
 				statusLabel.setText("");
