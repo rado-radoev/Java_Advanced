@@ -18,16 +18,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import com.knockknock.server.KKMultiServer;
+import com.knockknock.server.KKServerConstants;
 
 public class KnockKnockServerGUI extends JFrame {
 	
-	// TO DO: ADD MENU TO ADD CLIENTS
-	// EACH NEW CLIENT WILL BE RECORDED IN A LABEL
-	// KEEP TRACK OF RUNNING CLIENTS
-	
-	// FIX WHILE LOOP IN KKMULTI THRED - IT IS LOCKING UP THE GUI 
-
 	private static final long serialVersionUID = 6995715762008339632L;
+	
 	private final JPanel mainPanel;
 	private final JButton startServer;
 	private final JButton stopServer;
@@ -35,15 +31,15 @@ public class KnockKnockServerGUI extends JFrame {
 	private final JPanel buttonPanel;
 	private final BorderLayout mainLayout;
 	private final FlowLayout buttonLayout;
-	private final ExecutorService pool;
 	
+	private final ExecutorService pool;
 	private KKMultiServer server;
 	
 	public KnockKnockServerGUI() {
 		super("Knock Knock Server");
 		 
 		server = new KKMultiServer();
-		pool = Executors.newCachedThreadPool();
+		pool = Executors.newFixedThreadPool(KKServerConstants.MAXTHREADS.getValue());
 		
 		mainLayout = new BorderLayout();
 		mainPanel = new JPanel(mainLayout);
