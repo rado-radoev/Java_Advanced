@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -16,9 +17,13 @@ import java.util.concurrent.Executors;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane; 
+import com.sun.glass.events.KeyEvent;
+
 
 import com.knockknock.server.KKMultiServer;
 import com.knockknock.server.KKServerConst;
+import com.knockknock.client.gui.KnockKnockClientGUI;
 
 public class KnockKnockServerGUI extends JFrame {
 	
@@ -66,6 +71,49 @@ public class KnockKnockServerGUI extends JFrame {
 		
 		add(mainPanel);
 		
+		menuBar = new JMenuBar();
+		fileMenu = new JMenu("File");
+		fileMenu.setMnemonic(KeyEvent.VK_F);
+		
+		JMenuItem client = new JMenuItem("Client");
+		client.setMnemonic(KeyEvent.VK_C);
+		client.setToolTipText("Start new client");
+		client.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new KnockKnockClientGUI();
+			}
+		});
+		
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.setMnemonic(KeyEvent.VK_E);
+		exit.setToolTipText("Exit");
+		exit.addActionListener((ActionEvent event) -> {
+			System.exit(0);
+			});
+		
+		fileMenu.add(client);
+		fileMenu.add(exit);
+		
+		helpMenu = new JMenu("Help");
+		helpMenu.setMnemonic(KeyEvent.VK_H);
+		
+		JMenuItem about = new JMenuItem("About");
+		about.setMnemonic(KeyEvent.VK_A);
+		about.setToolTipText("About");
+		about.addActionListener((ActionEvent event) -> {
+			JOptionPane.showMessageDialog(this, 
+					"Radoslav Radoev - Java Programming IV : \nAdvanced Java Programming Structures");
+			});
+		
+		helpMenu.add(about);
+		
+		menuBar.add(fileMenu);
+		menuBar.add(helpMenu);
+		
+		setJMenuBar(menuBar);
+		
 	}
 	
 	class ButtonHandler implements ActionListener{
@@ -112,7 +160,7 @@ public class KnockKnockServerGUI extends JFrame {
 		
 
 				gui.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-				gui.setSize(200, 150);
+				gui.setSize(200, 200);
 				gui.setVisible(true);
 				
 			}
