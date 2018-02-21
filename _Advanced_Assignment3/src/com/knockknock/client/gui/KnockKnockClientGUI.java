@@ -22,12 +22,12 @@ public class KnockKnockClientGUI extends JFrame {
 	private static final long serialVersionUID = 4379695112985425572L;
 
 	private final JPanel mainPanel;
-	private final JPanel senderPanel;
+	private final JPanel sendPanel;
 	private final JButton sendButton;
-	private final JTextField textField;
-	private final JTextArea textArea;
+	private final JTextField userInputTextField;
+	private final JTextArea chatTextArea;
+	private final JScrollPane chatTextAreaScrollPane;
 	private final JLabel statusLabel;
-	private final JScrollPane textAreaScrollPane;
 	private final KnockKnockClient client;
 	
 	public KnockKnockClientGUI() {
@@ -36,13 +36,13 @@ public class KnockKnockClientGUI extends JFrame {
 		mainPanel = new JPanel(new BorderLayout());
 		client = new KnockKnockClient();
 		
-		textArea = new JTextArea();
-		textArea.setEditable(false);
+		chatTextArea = new JTextArea();
+		chatTextArea.setEditable(false);
 		
-		textAreaScrollPane = new JScrollPane(textArea);
-		mainPanel.add(textAreaScrollPane, BorderLayout.CENTER);
+		chatTextAreaScrollPane = new JScrollPane(chatTextArea);
+		mainPanel.add(chatTextAreaScrollPane, BorderLayout.CENTER);
 		
-		senderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		sendPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		sendButton = new JButton("Send");
 		sendButton.addActionListener( new ActionListener() {
 			
@@ -52,14 +52,14 @@ public class KnockKnockClientGUI extends JFrame {
 			}
 		});
 		
-		textField = new JTextField(10);
+		userInputTextField = new JTextField(10);
 		
 		statusLabel = new JLabel("Connected");
-		senderPanel.add(textField);
-		senderPanel.add(sendButton);
-		senderPanel.add(statusLabel);
+		sendPanel.add(userInputTextField);
+		sendPanel.add(sendButton);
+		sendPanel.add(statusLabel);
 		
-		mainPanel.add(senderPanel, BorderLayout.SOUTH);
+		mainPanel.add(sendPanel, BorderLayout.SOUTH);
 		
 		add(mainPanel);
 

@@ -17,8 +17,8 @@ public class KnockKnockClient {
     private String hostname; 
     
 	public KnockKnockClient() {
-	    	try {
-    		    setLaptopName(InetAddress.getLocalHost().getHostName());
+    	try {
+	    	setLaptopName(InetAddress.getLocalHost().getHostName());
             kkSocket = new Socket(hostname, 4444);
             out = new PrintWriter(kkSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
