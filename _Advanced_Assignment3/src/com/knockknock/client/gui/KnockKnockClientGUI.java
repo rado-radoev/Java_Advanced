@@ -19,6 +19,8 @@ import com.knockknock.client.KnockKnockClient;
 
 public class KnockKnockClientGUI extends JFrame {
 
+	private static final long serialVersionUID = 4379695112985425572L;
+
 	private final JPanel mainPanel;
 	private final JPanel senderPanel;
 	private final JButton sendButton;
