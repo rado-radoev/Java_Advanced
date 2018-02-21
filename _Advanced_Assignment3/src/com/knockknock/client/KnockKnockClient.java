@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import com.knockknock.server.KKServerConst;
+
 public class KnockKnockClient {
 	
     private Socket kkSocket;
@@ -17,26 +19,31 @@ public class KnockKnockClient {
     private String hostname; 
     
 	public KnockKnockClient() {
+		init();
+    }
+	
+	public void init() {
     	try {
-	    	setLaptopName(InetAddress.getLocalHost().getHostName());
-            kkSocket = new Socket(hostname, 4444);
+	    	setHostName(InetAddress.getLocalHost().getHostName());
+	    	
+            kkSocket = new Socket(hostname, KKServerConst.PORT.getValue());
             out = new PrintWriter(kkSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host: " + getLaptopName() + ".");
+            System.err.println("Don't know about host: " + getHostName() + ".");
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: " + getLaptopName() + ".");
+            System.err.println("Couldn't get I/O for the connection to: " + getHostName() + ".");
             System.exit(1);
         }
-    }
+	}
 	
-    public String getLaptopName() {
+    public String getHostName() {
 		return hostname;
 	}
 
-	public final void setLaptopName(String laptopName) {
-		this.hostname = laptopName;
+	public final void setHostName(String hostName) {
+		this.hostname = hostName;
 	}
 	
 	public void readValue() {
@@ -70,11 +77,14 @@ public class KnockKnockClient {
 	}
 	
 	
-    public void closeCleanup() {
+    public void close() {
 	    try {
-    		out.close();
-			in.close();
-			kkSocket.close();
+	    	if (out != null)
+	    		out.close();	
+			if (in != null)
+				in.close();
+			if (kkSocket != null)
+				kkSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -86,7 +96,7 @@ public class KnockKnockClient {
     		 KnockKnockClient client = new KnockKnockClient();
     		 
     		 client.readValue();
-    		 client.closeCleanup();
+    		 client.close();
     	             
     }
     
