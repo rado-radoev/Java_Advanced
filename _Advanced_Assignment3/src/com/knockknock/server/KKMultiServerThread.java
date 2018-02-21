@@ -36,7 +36,8 @@ public class KKMultiServerThread extends Thread {
 		    }
 		    out.close();
 		    in.close();
-	    	socket.close();
+		    socket.close();
+		    super.interrupt();
 	
 		} catch (IOException e) {
 		    e.printStackTrace();

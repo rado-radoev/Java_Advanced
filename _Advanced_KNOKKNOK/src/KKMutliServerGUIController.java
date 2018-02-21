@@ -41,7 +41,7 @@ public class KKMutliServerGUIController extends JFrame
 		//set defaults
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
-		setResizable(false);
+		setResizable(true);
 		setVisible(true);
 	}
 	

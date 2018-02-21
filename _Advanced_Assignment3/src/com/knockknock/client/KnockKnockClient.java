@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class KnockKnockClient {
@@ -39,6 +40,15 @@ public class KnockKnockClient {
 	}
 	
 	public void readValue() {
+		
+		if (kkSocket.isClosed()) {
+			try {
+				throw new SocketException("Socket is closed");
+			} catch (SocketException e) {
+				e.printStackTrace();
+			}
+		}
+		
         String fromServer;
         String fromUser;
 

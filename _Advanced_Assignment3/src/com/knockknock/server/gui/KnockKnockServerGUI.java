@@ -2,7 +2,6 @@ package com.knockknock.server.gui;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,12 +9,13 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.security.KeyManagementException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 
 import com.knockknock.server.KKMultiServer;
 import com.knockknock.server.KKServerConst;
@@ -31,6 +31,10 @@ public class KnockKnockServerGUI extends JFrame {
 	private final JPanel buttonPanel;
 	private final BorderLayout mainLayout;
 	private final FlowLayout buttonLayout;
+	private final JMenuBar menuBar;
+	private final JMenu fileMenu;
+	private final JMenu helpMenu;
+	
 	
 	private final ExecutorService pool;
 	private KKMultiServer server;
@@ -55,7 +59,7 @@ public class KnockKnockServerGUI extends JFrame {
 		buttonPanel.add(startServer);
 		buttonPanel.add(stopServer);
 		
-		statusLabel = new JLabel("The status will be shown here: ");
+		statusLabel = new JLabel("Server is: " + (server.isListening() ? "running" : "stopped"));
 		
 		mainPanel.add(buttonPanel, BorderLayout.CENTER);
 		mainPanel.add(statusLabel, BorderLayout.SOUTH);
@@ -70,55 +74,49 @@ public class KnockKnockServerGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
 				
-				if (server.isListening()) {
-					pool.execute(server);
-					statusLabel.setText("Server listening on port: "  + server.getPort());
-					
-					startServer.setEnabled(false);
-					stopServer.setEnabled(true);
+				if (!server.isListening()) {
+					server.setListening(true);
 				}
-				else {
-					statusLabel.setText("Server is off and not accepting connections");
-					startServer.setEnabled(true);
-					stopServer.setEnabled(false);
-				}
+				
+				pool.execute(server);
+				statusLabel.setText("Server is running");
+				
+				startServer.setEnabled(false);
+				stopServer.setEnabled(true);
+				
 			}
 			else if (e.getSource() == stopServer) {
 				server.setListening(false);
-				pool.shutdown();
-				
+				statusLabel.setText("Server is stopped");
 				startServer.setEnabled(true);
 				stopServer.setEnabled(false);
-				statusLabel.setText("Server stopped");
 			}
 		}
 		
 	}
 	
-	void shutdownAndAwaitTermination(ExecutorService pool) {
-		   pool.shutdown(); // Disable new tasks from being submitted
-		   try {
-		     // Wait a while for existing tasks to terminate
-		     if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-		       pool.shutdownNow(); // Cancel currently executing tasks
-		       // Wait a while for tasks to respond to being cancelled
-		       if (!pool.awaitTermination(60, TimeUnit.SECONDS))
-		           System.err.println("Pool did not terminate");
-		     }
-		   } catch (InterruptedException ie) {
-		     // (Re-)Cancel if current thread also interrupted
-		     pool.shutdownNow();
-		     // Preserve interrupt status
-		     Thread.currentThread().interrupt();
-		   }
-		 }
-	
 	public static void main(String[] args) {
-		KnockKnockServerGUI gui = new KnockKnockServerGUI();
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
 		
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gui.setSize(450, 350);
-		gui.setVisible(true);
+				KnockKnockServerGUI gui = new KnockKnockServerGUI();
+
+				gui.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosing(WindowEvent event) {
+						System.exit(0);
+					}
+				});
+		
+
+				gui.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				gui.setSize(200, 150);
+				gui.setVisible(true);
+				
+			}
+		});
 	}
 	
 }

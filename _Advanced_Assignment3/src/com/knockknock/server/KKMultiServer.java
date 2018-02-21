@@ -9,46 +9,43 @@ public class KKMultiServer implements Runnable {
     private boolean listening;
     
     public KKMultiServer() {
-    	super();
-    	this.port = KKServerConst.PORT.getValue();
-
-    	listening = true;
+	    	super();
+	    	this.port = KKServerConst.PORT.getValue();
     }
 	
     @Override
-    public void run() {
-
-        System.out.println("Server starting...");
-        
-        try(ServerSocket serverSocket = new ServerSocket(port)) {
+    public void run() {      
+        try(ServerSocket serverSocket = new ServerSocket(port)) { 
+        		serverSocket.setSoTimeout(KKServerConst.TIMEOUT.getValue());
             System.out.println("Server started ...");
 
-            //serverSocket.setSoTimeout(KKServerConst.TIMEOUT.getValue());
-            try {
-	            while (isListening()) {
-	    	       new KKMultiServerThread(serverSocket.accept()).start();
-	            }
-            } catch(SocketTimeoutException e) {
-        		/* 
-        		 * Time out used to close socket accept() before it is accessed illegally 
-        		 * from another client that does not have permission (i.e. after server 
-        		 * stops running in the middle of the while loop). If timeout was not used
-        		 * a client could connect without the server explicitly creating it.
-        		 */            	
+            while (isListening()) {
+	            	try {
+	            		new KKMultiServerThread(serverSocket.accept()).start();
+	            	} catch (SocketTimeoutException ste) {
+	            		/**
+	            	     * This run() begins threads to accept new clients so long as KKMultiServer is
+	            	     * listening (i.e. listening = true). Server does not close until it is 
+	            	     * explicitly called by some other class (i.e. toggleServer()). When server is 
+	            	     * no longer listening it simply does not accept any more clients. The method 
+	            	     * then proceeds to close the socket to finish this run() method.  
+	            	     * 
+	            	     */
+	            } catch (IOException ioe) {
+	            	  ioe.printStackTrace();
+	              }
             }
-              catch (IOException ioe) {
-            	  System.out.println("Something happened in while loop of run: ");
-            	  ioe.printStackTrace();
-              }
             
             serverSocket.close();
-
+            System.out.println("Server socket closed");
+            
         } catch (IOException ioe) {
             System.err.println("Could not listen on port: " + port + ".");
             System.exit(-1);
         }
+
     }
-    
+       
     public synchronized int getPort() {
     	return port;
     }
