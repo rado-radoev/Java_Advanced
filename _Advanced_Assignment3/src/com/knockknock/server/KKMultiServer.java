@@ -2,21 +2,17 @@ package com.knockknock.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.SocketTimeoutException;
 
 public class KKMultiServer implements Runnable {
 	private final int port;
     private boolean listening;
     
-    public KKMultiServer(int... port) {
+    public KKMultiServer() {
     	super();
-    	if (port.length > 1 || port[0] <= 1024) 
-    		throw new IllegalArgumentException("Select port in range 1025 - 65535");
-    	
-    	if (port == null)
-    		this.port = KKServerConstants.PORT.getValue();
-    	else 
-    		this.port = port[0];
-    		
+    	this.port = KKServerConst.PORT.getValue();
+
+    	listening = true;
     }
 	
     @Override
@@ -27,17 +23,25 @@ public class KKMultiServer implements Runnable {
         try(ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server started ...");
 
-    		/* 
-    		 * Time out used to close socket accept() before it is accessed illegally 
-    		 * from another client that does not have permission (i.e. after server 
-    		 * stops running in the middle of the while loop). If timeout was not used
-    		 * a client could connect without the server explicitly creating it.
-    		 */
-            serverSocket.setSoTimeout(KKServerConstants.TIMEOUT.getValue());
-            
-            while (isListening()) {
-    	       new KKMultiServerThread(serverSocket.accept()).start();
+            //serverSocket.setSoTimeout(KKServerConst.TIMEOUT.getValue());
+            try {
+	            while (isListening()) {
+	    	       new KKMultiServerThread(serverSocket.accept()).start();
+	            }
+            } catch(SocketTimeoutException e) {
+        		/* 
+        		 * Time out used to close socket accept() before it is accessed illegally 
+        		 * from another client that does not have permission (i.e. after server 
+        		 * stops running in the middle of the while loop). If timeout was not used
+        		 * a client could connect without the server explicitly creating it.
+        		 */            	
             }
+              catch (IOException ioe) {
+            	  System.out.println("Something happened in while loop of run: ");
+            	  ioe.printStackTrace();
+              }
+            
+            serverSocket.close();
 
         } catch (IOException ioe) {
             System.err.println("Could not listen on port: " + port + ".");
@@ -45,6 +49,9 @@ public class KKMultiServer implements Runnable {
         }
     }
     
+    public synchronized int getPort() {
+    	return port;
+    }
     
     public synchronized void setListening(Boolean listening) {
     	this.listening = listening;

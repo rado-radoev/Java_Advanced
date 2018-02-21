@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import com.knockknock.server.KKMultiServer;
-import com.knockknock.server.KKServerConstants;
+import com.knockknock.server.KKServerConst;
 
 public class KnockKnockServerGUI extends JFrame {
 	
@@ -39,7 +39,7 @@ public class KnockKnockServerGUI extends JFrame {
 		super("Knock Knock Server");
 		 
 		server = new KKMultiServer();
-		pool = Executors.newFixedThreadPool(KKServerConstants.MAXTHREADS.getValue());
+		pool = Executors.newFixedThreadPool(KKServerConst.MAXTHREADS.getValue());
 		
 		mainLayout = new BorderLayout();
 		mainPanel = new JPanel(mainLayout);
@@ -69,37 +69,26 @@ public class KnockKnockServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
-				server.setListening(true);
 				
-				pool.execute(new Runnable() {
+				if (server.isListening()) {
+					pool.execute(server);
+					statusLabel.setText("Server listening on port: "  + server.getPort());
 					
-					@Override
-					public void run() {
-						try {
-							server.start();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				});
-				
-				startServer.setEnabled(false);
-				stopServer.setEnabled(true);
-				statusLabel.setText("");
-				//statusLabel.setText("Server started. Listening on port: "  + server.getServerPort());
+					startServer.setEnabled(false);
+					stopServer.setEnabled(true);
+				}
+				else {
+					statusLabel.setText("Server is off and not accepting connections");
+					startServer.setEnabled(true);
+					stopServer.setEnabled(false);
+				}
 			}
 			else if (e.getSource() == stopServer) {
 				server.setListening(false);
-
-				try {
-					server.closeSocketConnection();
-					pool.awaitTermination(10, TimeUnit.SECONDS);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+				pool.shutdown();
+				
 				startServer.setEnabled(true);
 				stopServer.setEnabled(false);
-				statusLabel.setText("");
 				statusLabel.setText("Server stopped");
 			}
 		}

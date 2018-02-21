@@ -1,14 +1,14 @@
 package com.knockknock.server;
 
-public enum KKServerConstants {
+public enum KKServerConst {
 	
 	PORT ( 4444 ),
-	TIMEOUT ( 1000 ),
+	TIMEOUT ( 2000 ),
 	MAXTHREADS ( 1 );
 	
 	private final int constant;
 	
-	private KKServerConstants(int constant) {
+	private KKServerConst(int constant) {
 		this.constant = constant;
 	}
 	
