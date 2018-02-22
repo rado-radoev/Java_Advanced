@@ -1,4 +1,4 @@
-package com.knockknock.server;
+package com.knockknock.constants;
 
 public enum KKServerConst {
 	

@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -22,8 +21,8 @@ import com.sun.glass.events.KeyEvent;
 
 
 import com.knockknock.server.KKMultiServer;
-import com.knockknock.server.KKServerConst;
 import com.knockknock.client.gui.KnockKnockClientGUI;
+import com.knockknock.constants.KKServerConst;
 
 public class KnockKnockServerGUI extends JFrame {
 	
@@ -82,10 +81,16 @@ public class KnockKnockServerGUI extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new KnockKnockClientGUI();
+					new Thread(new Runnable() {
+					
+						@Override
+						public void run() {
+							new KnockKnockClientGUI
+							();
+						}
+					}).start();
 			}
 		});
-		
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.setMnemonic(KeyEvent.VK_E);
 		exit.setToolTipText("Exit");
@@ -154,7 +159,8 @@ public class KnockKnockServerGUI extends JFrame {
 				gui.addWindowListener(new WindowAdapter() {
 					@Override
 					public void windowClosing(WindowEvent event) {
-						System.exit(0);
+						if (event.getWindow() == gui)
+							 System.exit(0);
 					}
 				});
 		

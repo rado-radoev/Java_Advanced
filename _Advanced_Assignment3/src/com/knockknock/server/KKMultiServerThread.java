@@ -11,8 +11,8 @@ public class KKMultiServerThread extends Thread {
     private Socket socket;
 
     public KKMultiServerThread(Socket socket) {
-    	super("KKMultiServerThread");
-    	this.socket = socket;
+	    	super("KKMultiServerThread");
+	    	this.socket = socket;
     }
 
     @Override
@@ -20,8 +20,8 @@ public class KKMultiServerThread extends Thread {
 
 	try ( PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 		  BufferedReader in = new BufferedReader(
-					    	  new InputStreamReader(
-		    					socket.getInputStream()))) {
+					    	  		new InputStreamReader(
+			    	  				socket.getInputStream()))) {
 	
 		    String inputLine, outputLine;
 		    KnockKnockProtocol kkp = new KnockKnockProtocol();
@@ -29,10 +29,12 @@ public class KKMultiServerThread extends Thread {
 		    out.println(outputLine);
 	
 		    while ((inputLine = in.readLine()) != null) {
-			outputLine = kkp.processInput(inputLine);
-			out.println(outputLine);
-			if (outputLine.equals("Bye"))
-			    break;
+				if (inputLine.length() > 0) {
+			    		outputLine = kkp.processInput(inputLine);
+					out.println(outputLine);
+					if (outputLine.equals("Bye"))
+					    break;
+				}
 		    }
 		    out.close();
 		    in.close();
