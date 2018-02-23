@@ -9,8 +9,10 @@ import java.util.concurrent.Executors;
 
 import javax.swing.*;
 
+import com.knockknock.orig.KnockKnockClient;
 
-public class KnockKnockClientGUI extends JFrame
+
+public class KnockKnockClientGUI extends JFrame implements Runnable
 {
     private String fromServer;
     private String fromUser;
@@ -24,21 +26,23 @@ public class KnockKnockClientGUI extends JFrame
     private JPanel bottomPanel;
     private PrintWriter out;
 
-    public void init() throws IOException 
+    public void init() 
     {
         Socket kkSocket = null;
         //BufferedReader in = null;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        String hostName = "";
 
         try {
-            kkSocket = new Socket(InetAddress.getLocalHost().getHostName(), 4444);
+        	hostName = InetAddress.getLocalHost().getHostName();
+            kkSocket = new Socket(hostName, 4444);
             out = new PrintWriter(kkSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host: " + InetAddress.getLocalHost().getHostName());
+            System.err.println("Don't know about host: " + hostName);
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: " + InetAddress.getLocalHost().getHostName());
+            System.err.println("Couldn't get I/O for the connection to: " + hostName);
             System.exit(1);
         }
 
@@ -121,8 +125,6 @@ public class KnockKnockClientGUI extends JFrame
                 if (fromServer.equals("Bye."))
                     break;
                 }
-                
-                dispose();
             }
             catch(Exception e)
             {
@@ -149,4 +151,10 @@ public class KnockKnockClientGUI extends JFrame
             }
         });
     }
+
+    @Override
+	public void run() {
+		init();
+		
+	}
 }

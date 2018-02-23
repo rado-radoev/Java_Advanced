@@ -23,22 +23,13 @@ public class KKMultiServer implements Runnable {
             while (isListening()) {
 	            	try {
 	            		new KKMultiServerThread(serverSocket.accept()).start();
-	            	} catch (SocketTimeoutException ste) {
-	            		/**
-	            	     * This run() begins threads to accept new clients so long as KKMultiServer is
-	            	     * listening (i.e. listening = true). Server does not close until it is 
-	            	     * explicitly called by some other class (i.e. toggleServer()). When server is 
-	            	     * no longer listening it simply does not accept any more clients. The method 
-	            	     * then proceeds to close the socket to finish this run() method.  
-	            	     * 
-	            	     */
-	            } catch (IOException ioe) {
+	            	} catch (SocketTimeoutException ste) { } 
+            		catch (IOException ioe) {
 	            	  ioe.printStackTrace();
 	              }
             }
             
             serverSocket.close();
-            System.out.println("Server socket closed");
             
         } catch (IOException ioe) {
             System.err.println("Could not listen on port: " + port + ".");

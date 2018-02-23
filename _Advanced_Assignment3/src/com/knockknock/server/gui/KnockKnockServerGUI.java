@@ -85,8 +85,7 @@ public class KnockKnockServerGUI extends JFrame {
 					
 						@Override
 						public void run() {
-							new KnockKnockClientGUI
-							();
+							new KnockKnockClientGUI().run();
 						}
 					}).start();
 			}
