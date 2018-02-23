@@ -1,4 +1,4 @@
-package com.knockknock.client.gui;
+package com.knockknock.client;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;
@@ -7,7 +7,7 @@ import java.net.*;
 import javax.swing.*;
 
 
-public class KnockKnockClient extends JFrame
+public class KnockKnockClient_2 extends JFrame
 {
 
     public String fromServer;
@@ -124,7 +124,7 @@ public class KnockKnockClient extends JFrame
         {
             public void run()
             {
-                KnockKnockClient client = new KnockKnockClient();
+                KnockKnockClient_2 client = new KnockKnockClient_2();
                 try
                 {
                     client.Client();

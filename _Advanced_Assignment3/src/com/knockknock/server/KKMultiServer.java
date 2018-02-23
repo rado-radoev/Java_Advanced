@@ -19,7 +19,6 @@ public class KKMultiServer implements Runnable {
     public void run() {      
         try(ServerSocket serverSocket = new ServerSocket(port)) { 
         		serverSocket.setSoTimeout(KKServerConst.TIMEOUT.getValue());
-            System.out.println("Server started ...");
 
             while (isListening()) {
 	            	try {
