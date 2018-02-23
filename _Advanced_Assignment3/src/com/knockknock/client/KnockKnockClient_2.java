@@ -115,6 +115,8 @@ public class KnockKnockClient_2 extends JFrame
             {
                 e.printStackTrace();
             }
+            
+            dispose();
         }
      }
 
