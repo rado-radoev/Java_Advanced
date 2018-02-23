@@ -16,6 +16,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.knockknock.client.KnockKnockClient;
+
 
 public class KnockKnockClientGUI extends JFrame {
 
@@ -29,8 +31,12 @@ public class KnockKnockClientGUI extends JFrame {
 	private final JScrollPane chatTextAreaScrollPane;
 	private final JLabel statusLabel;
 	
+	private KnockKnockClient kkClient;
+	
 	public KnockKnockClientGUI() {
 		super("Knock Knock Client");
+		
+		kkClient = new KnockKnockClient();
 		
 		mainPanel = new JPanel(new BorderLayout());
 		
@@ -42,22 +48,25 @@ public class KnockKnockClientGUI extends JFrame {
 		mainPanel.add(chatTextAreaScrollPane, BorderLayout.CENTER);
 		
 		sendPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		sendButton = new JButton("Send");
-		sendButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
+	
 		userInputTextField = new JTextField(10);
 		userInputTextField.requestFocusInWindow();
 		userInputTextField.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				chatTextArea.append("\nClient: " + userInputTextField.getText());
+				kkClient.readClientInput(userInputTextField.getText() + "\n");
+			}
+		});
+		
+		sendButton = new JButton("Send");
+		sendButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chatTextArea.append("\nClient: " + userInputTextField.getText());
+				kkClient.readClientInput(userInputTextField.getText() + "\n");
 			}
 		});
 		

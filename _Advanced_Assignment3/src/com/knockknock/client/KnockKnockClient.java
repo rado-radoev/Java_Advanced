@@ -44,19 +44,11 @@ public class KnockKnockClient {
     	return output;
     }
     
-    public String readClientInput() {
-    	String fromUser = "";
-        try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));) {
-			fromUser = stdIn.readLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
- 	    if (fromUser != null) {
-                 System.out.println("Client: " + fromUser);
-                 out.println(fromUser);
+    public void readClientInput(String input) {
+
+ 	    if (input != null) {
+             out.println(input);
  	    }
-		return fromUser;
     }
 	
 	
