@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.swing.*;
@@ -17,6 +18,8 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
     private String fromServer;
     private String fromUser;
     private BufferedReader in = null;
+    
+    private ExecutorService pool;
 
     private JTextArea chatTextArea;
     private JTextField userInputTextField;
@@ -29,7 +32,6 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
     public void init() 
     {
         Socket kkSocket = null;
-        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String hostName = "";
 
         try {
@@ -75,8 +77,7 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
         setSize(350, 250);
         setVisible(true); 
 
-        Thread receiveMessage = new Thread(new ReceiveMessage(in, fromServer, chatTextArea));
-        receiveMessage.start();
+        new Thread(new ReceiveMessage(in, fromServer, chatTextArea)).start();;
      }   
     
     private void getUserInput() {
@@ -96,6 +97,10 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
 			getUserInput();
 		}
     	
+    }
+    
+    public ExecutorService getThreadPool() {
+    		return pool;
     }
 
     @Override

@@ -3,12 +3,15 @@ package com.knockknock.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.knockknock.constants.KKServerConst;
 
 public class KKMultiServer implements Runnable {
     private boolean listening;
     private IOException thrownException;
+    private ExecutorService pool;
     
     private KKMultiServer() { }
 
@@ -25,9 +28,11 @@ public class KKMultiServer implements Runnable {
         try(ServerSocket serverSocket = new ServerSocket(KKServerConst.PORT.getValue())) { 
         		serverSocket.setSoTimeout(KKServerConst.TIMEOUT.getValue());
 
+        		pool = Executors.newCachedThreadPool();
+        		
             while (isListening()) {
 	            	try {
-	            		new KKMultiServerThread(serverSocket.accept()).start();
+	            		pool.execute(new KKMultiServerThread(serverSocket.accept()));
 	            	} catch (SocketTimeoutException ste) { } 
             		catch (IOException ioe) {
             			throwException(ioe);
@@ -35,6 +40,7 @@ public class KKMultiServer implements Runnable {
             }
             
             serverSocket.close();
+            pool.shutdownNow();
             
         } catch (IOException ioe) {
         		setListening(false);

@@ -29,6 +29,10 @@ public class MessageReader {
 			file = new File(getClass().getResource(String.format("%s/clues.txt", packagePath)).getPath());
 		else if (fileToGet == ResponseFiles.ANSWERS)
 			file = new File(getClass().getResource(String.format("%s/answers.txt", packagePath)).getPath());
+		
+		if (file == null) {
+			throwException(new IOException("Are you missing a file?"));
+		}
 	}
 
 
@@ -53,8 +57,8 @@ public class MessageReader {
 		return output;
 	}
 
-    private void throwException(IOException ioe) {
-		this.thrownException = ioe;
+    private void throwException(IOException e) {
+		this.thrownException = e;
 	}
 	
 	public synchronized IOException thrownException() {

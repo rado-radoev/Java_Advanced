@@ -7,11 +7,10 @@ import com.knockknock.protocol.KnockKnockProtocol;
 
 import java.io.*;
 
-public class KKMultiServerThread extends Thread {
+public class KKMultiServerThread implements Runnable {
     private Socket socket;
 
     public KKMultiServerThread(Socket socket) {
-	    	super("KKMultiServerThread");
 	    	this.socket = socket;
     }
 
@@ -39,7 +38,6 @@ public class KKMultiServerThread extends Thread {
 		    out.close();
 		    in.close();
 		    socket.close();
-		    super.interrupt();
 	
 		} catch (IOException e) {
 		    e.printStackTrace();

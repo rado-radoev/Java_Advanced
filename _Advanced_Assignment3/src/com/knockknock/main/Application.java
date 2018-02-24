@@ -33,9 +33,11 @@ public class Application {
 				gui.addWindowListener(new WindowAdapter() {
 					@Override
 					public void windowClosing(WindowEvent event) {
-						if (event.getWindow() == gui)
+						if (event.getWindow() == gui) {
 							gui.getExecutionThreadPool().shutdownNow();
+							executors.shutdownNow();
 							 System.exit(0);
+						}
 					}
 				});
 		
