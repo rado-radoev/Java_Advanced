@@ -18,8 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane; 
 import com.sun.glass.events.KeyEvent;
-
-
+import com.sun.security.ntlm.Client;
 import com.knockknock.server.KKMultiServer;
 import com.knockknock.client.gui.KnockKnockClientGUI;
 import com.knockknock.constants.KKServerConst;
@@ -38,7 +37,7 @@ public class KnockKnockServerGUI extends JFrame {
 	private final JMenuBar menuBar;
 	private final JMenu fileMenu;
 	private final JMenu helpMenu;
-	
+	private final JMenuItem client;
 	
 	private final ExecutorService pool;
 	private KKMultiServer server;
@@ -46,20 +45,22 @@ public class KnockKnockServerGUI extends JFrame {
 	public KnockKnockServerGUI() {
 		super("Knock Knock Server");
 		 
-		server = new KKMultiServer();
+		server = KKMultiServer.getInstance();
 		pool = Executors.newFixedThreadPool(KKServerConst.MAXTHREADS.getValue());
-		
+
 		mainLayout = new BorderLayout();
 		mainPanel = new JPanel(mainLayout);
 		
 		buttonLayout = new FlowLayout(FlowLayout.CENTER, 5, 1);
 		ButtonHandler buttonHandler = new ButtonHandler();
+		
 		startServer = new JButton("Start server");
 		startServer.addActionListener(buttonHandler);
+		
 		stopServer = new JButton("Stop server");
 		stopServer.addActionListener(buttonHandler);
+
 		buttonPanel = new JPanel(buttonLayout);
-		
 		buttonPanel.add(startServer);
 		buttonPanel.add(stopServer);
 		
@@ -74,9 +75,10 @@ public class KnockKnockServerGUI extends JFrame {
 		fileMenu = new JMenu("File");
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		
-		JMenuItem client = new JMenuItem("Client");
+		client = new JMenuItem("Client");
 		client.setMnemonic(KeyEvent.VK_C);
 		client.setToolTipText("Start new client");
+		client.setEnabled(false);
 		client.addActionListener(new ActionListener() {
 			
 			@Override
@@ -94,6 +96,7 @@ public class KnockKnockServerGUI extends JFrame {
 		exit.setMnemonic(KeyEvent.VK_E);
 		exit.setToolTipText("Exit");
 		exit.addActionListener((ActionEvent event) -> {
+			pool.shutdownNow();
 			System.exit(0);
 			});
 		
@@ -131,11 +134,15 @@ public class KnockKnockServerGUI extends JFrame {
 				}
 				
 				pool.execute(server);
-				statusLabel.setText("Server is running");
 				
-				startServer.setEnabled(false);
-				stopServer.setEnabled(true);
-				
+				if (!server.isListening()) {
+					new JOptionPane(server.thrownException().getMessage(), ERROR);
+				} else {
+					statusLabel.setText("Server is running");	
+					startServer.setEnabled(false);
+					stopServer.setEnabled(true);
+					client.setEnabled(true);
+				}
 			}
 			else if (e.getSource() == stopServer) {
 				server.setListening(false);
@@ -159,15 +166,14 @@ public class KnockKnockServerGUI extends JFrame {
 					@Override
 					public void windowClosing(WindowEvent event) {
 						if (event.getWindow() == gui)
+							 gui.pool.shutdownNow();
 							 System.exit(0);
 					}
 				});
 		
-
-				gui.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				gui.setSize(200, 200);
+				gui.setLocationRelativeTo(null);
 				gui.setVisible(true);
-				
 			}
 		});
 	}

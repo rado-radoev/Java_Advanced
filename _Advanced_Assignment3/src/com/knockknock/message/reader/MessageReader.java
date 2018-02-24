@@ -14,6 +14,7 @@ import java.util.List;
 public class MessageReader {
 	
 	private File file;
+	private IOException thrownException;
 
 
 	public MessageReader(ResponseFiles responseFile) {
@@ -46,12 +47,19 @@ public class MessageReader {
 			}
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			throwException(e);
 		}
 		
 		return output;
 	}
 
+    private void throwException(IOException ioe) {
+		this.thrownException = ioe;
+	}
+	
+	public synchronized IOException thrownException() {
+			return thrownException;
+	}
 	
 }
 		

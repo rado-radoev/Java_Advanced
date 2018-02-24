@@ -3,15 +3,15 @@ package com.knockknock.protocol;
 import java.security.SecureRandom;
 import java.util.List;
 
-import com.knockknock.message.reader.MessageReader;
-import com.knockknock.message.reader.ResponseFiles;
+import com.knockknock.message.reader.MessageLoader;
 
 public class KnockKnockProtocol {
 
     private State state = State.WAITING;
     
-    private final List<String> clues = new MessageReader(ResponseFiles.CLUES).readFile();
-    private final List<String> answers = new MessageReader(ResponseFiles.ANSWERS).readFile();
+    
+    private final List<String> clues = MessageLoader.getInstance().getClues();
+    private final List<String> answers = MessageLoader.getInstance().getAnswers();
     
     private int currentJoke = new SecureRandom().nextInt(clues.size());
 

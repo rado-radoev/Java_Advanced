@@ -7,17 +7,22 @@ import java.net.SocketTimeoutException;
 import com.knockknock.constants.KKServerConst;
 
 public class KKMultiServer implements Runnable {
-	private final int port;
     private boolean listening;
+    private IOException thrownException;
     
-    public KKMultiServer() {
-	    	super();
-	    	this.port = KKServerConst.PORT.getValue();
-    }
+    private KKMultiServer() { }
+
+	private static class Initializer {
+		static final KKMultiServer INSTANCE = new KKMultiServer(); 
+	}
+	
+	public static KKMultiServer getInstance() {
+		return Initializer.INSTANCE;
+	}
 	
     @Override
     public void run() {      
-        try(ServerSocket serverSocket = new ServerSocket(port)) { 
+        try(ServerSocket serverSocket = new ServerSocket(KKServerConst.PORT.getValue())) { 
         		serverSocket.setSoTimeout(KKServerConst.TIMEOUT.getValue());
 
             while (isListening()) {
@@ -25,21 +30,24 @@ public class KKMultiServer implements Runnable {
 	            		new KKMultiServerThread(serverSocket.accept()).start();
 	            	} catch (SocketTimeoutException ste) { } 
             		catch (IOException ioe) {
-	            	  ioe.printStackTrace();
-	              }
+            			throwException(ioe);
+            		}
             }
             
             serverSocket.close();
             
         } catch (IOException ioe) {
-            System.err.println("Could not listen on port: " + port + ".");
-            System.exit(-1);
+        		setListening(false);
+            throwException(ioe);
         }
-
     }
-       
-    public synchronized int getPort() {
-    	return port;
+    
+    private void throwException(IOException ioe) {
+    		this.thrownException = ioe;
+    }
+    
+    public synchronized IOException thrownException() {
+    		return thrownException;
     }
     
     public synchronized void setListening(Boolean listening) {
