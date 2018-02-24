@@ -154,30 +154,9 @@ public class KnockKnockServerGUI extends JFrame {
 		
 	}
 	
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-		
-				KnockKnockServerGUI gui = new KnockKnockServerGUI();
-
-				gui.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowClosing(WindowEvent event) {
-						if (event.getWindow() == gui)
-							 gui.pool.shutdownNow();
-							 System.exit(0);
-					}
-				});
-		
-				gui.setSize(200, 200);
-				gui.setLocationRelativeTo(null);
-				gui.setVisible(true);
-			}
-		});
+	public ExecutorService getExecutionThreadPool() {
+		return pool;
 	}
-	
 }
 
 

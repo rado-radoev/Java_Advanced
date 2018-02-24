@@ -29,7 +29,6 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
     public void init() 
     {
         Socket kkSocket = null;
-        //BufferedReader in = null;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String hostName = "";
 
@@ -76,8 +75,7 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
         setSize(350, 250);
         setVisible(true); 
 
-         
-        Thread receiveMessage = new Thread(new ReceiveChat(in, stdIn, out));    
+        Thread receiveMessage = new Thread(new ReceiveMessage(in, fromServer, chatTextArea));
         receiveMessage.start();
      }   
     
@@ -98,58 +96,6 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
 			getUserInput();
 		}
     	
-    }
-
-     private class ReceiveChat implements Runnable
-     {
-        private BufferedReader in;
-        private BufferedReader stdIn;
-        private PrintWriter out;
-
-        public ReceiveChat(BufferedReader in, BufferedReader stdIn, PrintWriter out)
-        {
-            this.in = in;
-            this.stdIn = stdIn;
-            this.out = out;
-        }
-
-        public void run()
-        {
-            try
-            {
-                while ((fromServer = in.readLine()) != null) {
-                String str = "Server : " + fromServer + "\n";
-                chatTextArea.append(str);
-                chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
-
-                if (fromServer.equals("Bye."))
-                    break;
-                }
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-     }
-
-    public static void main(String... args)
-    {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                KnockKnockClientGUI client = new KnockKnockClientGUI();
-                try
-                {
-                    client.init();
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     @Override

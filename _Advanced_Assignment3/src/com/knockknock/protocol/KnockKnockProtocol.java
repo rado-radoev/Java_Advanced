@@ -10,8 +10,8 @@ public class KnockKnockProtocol {
     private State state = State.WAITING;
     
     
-    private final List<String> clues = MessageLoader.getInstance().getClues();
-    private final List<String> answers = MessageLoader.getInstance().getAnswers();
+    private final List<String> clues = MessageLoader.getClues();
+    private final List<String> answers = MessageLoader.getAnswers();
     
     private int currentJoke = new SecureRandom().nextInt(clues.size());
 
