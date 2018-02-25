@@ -3,19 +3,19 @@ package com.knockknock.message.reader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+
 
 public class MessageReader {
 	
 	private File file;
-	private IOException thrownException;
-
 
 	public MessageReader(ResponseFiles responseFile) {
 		getFilePath(responseFile);
@@ -25,13 +25,13 @@ public class MessageReader {
 	private final void getFilePath(ResponseFiles fileToGet) {
 		String packagePath = "/com/knockknock/message";
 		
+		try {
 		if (fileToGet == ResponseFiles.CLUES)
 			file = new File(getClass().getResource(String.format("%s/clues.txt", packagePath)).getPath());
 		else if (fileToGet == ResponseFiles.ANSWERS)
 			file = new File(getClass().getResource(String.format("%s/answers.txt", packagePath)).getPath());
-		
-		if (file == null) {
-			throwException(new IOException("Are you missing a file?"));
+		} catch (NullPointerException e) {
+			javax.swing.JOptionPane.showMessageDialog(null, "Jokes Files Missing", "File Missing", JOptionPane.ERROR_MESSAGE); 
 		}
 	}
 
@@ -51,20 +51,11 @@ public class MessageReader {
 			}
 			
 		} catch (IOException e) {
-			throwException(e);
+			javax.swing.JOptionPane.showMessageDialog(null, "Cannot jokes file(s)", "Read Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return output;
 	}
-
-    private void throwException(IOException e) {
-		this.thrownException = e;
-	}
-	
-	public synchronized IOException thrownException() {
-			return thrownException;
-	}
-	
 }
 		
 		

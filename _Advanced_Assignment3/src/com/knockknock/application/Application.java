@@ -13,16 +13,7 @@ public class Application {
 	public static void main(String[] args) {
 		
 		ExecutorService executors = Executors.newCachedThreadPool();
-		
-		executors.execute(new Runnable() {
 			
-			@Override
-			public void run() {
-				MessageLoader.getInstance();
-			}
-		});
-		
-		
 		executors.execute(new Runnable() {
 			
 			@Override
@@ -48,6 +39,13 @@ public class Application {
 		});
 
 
+		executors.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				MessageLoader.getInstance();
+			}
+		});
 	}
 
 }

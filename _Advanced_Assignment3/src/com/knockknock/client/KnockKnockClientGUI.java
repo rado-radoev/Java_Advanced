@@ -6,11 +6,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.swing.*;
-
-import com.knockknock.orig.KnockKnockClient;
 
 
 public class KnockKnockClientGUI extends JFrame implements Runnable
@@ -40,10 +37,16 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
             out = new PrintWriter(kkSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host: " + hostName);
+        		JOptionPane.showMessageDialog(null, 
+        				"Don't know about host: " + hostName, 
+        				"File Missing", 
+        				JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: " + hostName);
+    			JOptionPane.showMessageDialog(null, 
+    				"Couldn't get I/O for the connection to: " + hostName, 
+    				"File Missing", 
+    				JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 
