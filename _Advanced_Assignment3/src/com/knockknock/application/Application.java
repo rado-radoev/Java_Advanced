@@ -1,7 +1,7 @@
-package com.knockknock.main;
+package com.knockknock.application;
 
-import com.knockknock.server.gui.KnockKnockServerGUI;
 import com.knockknock.message.reader.MessageLoader;
+import com.knockknock.server.KnockKnockServerGUI;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

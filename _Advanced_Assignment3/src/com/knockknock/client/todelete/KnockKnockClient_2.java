@@ -1,4 +1,4 @@
-package com.knockknock.client;
+package com.knockknock.client.todelete;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;

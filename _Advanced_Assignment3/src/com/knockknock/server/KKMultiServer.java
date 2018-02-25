@@ -6,8 +6,6 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.knockknock.constants.KKServerConst;
-
 public class KKMultiServer implements Runnable {
     private boolean listening;
     private IOException thrownException;

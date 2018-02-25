@@ -1,4 +1,4 @@
-package com.knockknock.client;
+package com.knockknock.client.todelete;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -18,7 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import com.knockknock.constants.KKServerConst;
+import com.knockknock.server.KKServerConst;
 
 public class KnockKnockClient_1 extends JFrame {
     private Socket kkSocket;

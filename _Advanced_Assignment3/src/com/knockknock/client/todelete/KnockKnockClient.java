@@ -1,4 +1,4 @@
-package com.knockknock.client;
+package com.knockknock.client.todelete;
 
 import java.awt.HeadlessException;
 import java.io.*;

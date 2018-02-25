@@ -1,4 +1,4 @@
-package com.knockknock.client.gui;
+package com.knockknock.client;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

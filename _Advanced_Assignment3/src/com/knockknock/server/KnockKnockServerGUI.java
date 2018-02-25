@@ -1,4 +1,4 @@
-package com.knockknock.server.gui;
+package com.knockknock.server;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -16,12 +16,11 @@ import java.util.concurrent.Executors;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane; 
+import javax.swing.JOptionPane;
+
+import com.knockknock.client.KnockKnockClientGUI;
 import com.sun.glass.events.KeyEvent;
 import com.sun.security.ntlm.Client;
-import com.knockknock.server.KKMultiServer;
-import com.knockknock.client.gui.KnockKnockClientGUI;
-import com.knockknock.constants.KKServerConst;
 
 public class KnockKnockServerGUI extends JFrame {
 	

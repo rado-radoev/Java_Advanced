@@ -1,29 +1,38 @@
 package com.knockknock.client;
 
 import java.io.BufferedReader;
-import java.io.PrintWriter;
 
-class ReceiveMessage implements Runnable {
-	
+public class ReceiveMessage implements Runnable {
+
 	private BufferedReader in;
-    private BufferedReader stdIn;
-    private PrintWriter out;
 	private String fromServer;
+	private javax.swing.JTextArea chatTextArea;
 	
-	public ReceiveMessage(BufferedReader in, BufferedReader stdIn, PrintWriter out, String fromServer) {
+	
+	public ReceiveMessage(BufferedReader in, String fromServer, javax.swing.JTextArea chatTextArea) {
 		super();
 		this.in = in;
-		this.stdIn = stdIn;
-		this.out = out;
 		this.fromServer = fromServer;
+		this.chatTextArea = chatTextArea;
 	}
-
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
+    public void run()
+    {
+        try
+        {
+            while ((fromServer = in.readLine()) != null) {
+            String str = "Server : " + fromServer + "\n";
+            chatTextArea.append(str);
+            chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
 
-	
+            if (fromServer.equals("Bye."))
+                break;
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
