@@ -1,7 +1,6 @@
 package com.knockknock.server;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,8 +8,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JMenu;
@@ -20,8 +17,17 @@ import javax.swing.JOptionPane;
 
 import com.knockknock.client.KnockKnockClientGUI;
 import com.sun.glass.events.KeyEvent;
-import com.sun.security.ntlm.Client;
 
+/**
+* <h1>Knock Knock Server Graphical User Interface</h1>
+* Class that creates a Server Start/Stop Graphical User Interface.
+* </br>New clients can be started from this GUI, only when a server is running.
+* 
+* 
+* @author  Radoslav Radoev
+* @version %I%, %G%
+* @since   02/25/2018
+*/
 public class KKServerGUI extends JFrame {
 	
 	private static final long serialVersionUID = 6995715762008339632L;
@@ -44,9 +50,11 @@ public class KKServerGUI extends JFrame {
 	public KKServerGUI() {
 		super("Knock Knock Server");
 		 
+		// Create new server instance and start it
 		server = KKMultiServer.getInstance();
 		pool = Executors.newFixedThreadPool(KKServerConst.MAXTHREADS.getValue());
 
+		// Build the GUI
 		mainLayout = new BorderLayout();
 		mainPanel = new JPanel(mainLayout);
 		
@@ -78,6 +86,7 @@ public class KKServerGUI extends JFrame {
 		client.setMnemonic(KeyEvent.VK_C);
 		client.setToolTipText("Start new client");
 		client.setEnabled(false);
+		// Client can only be started once the server is running
 		client.addActionListener(new ActionListener() {
 			
 			@Override
@@ -122,30 +131,46 @@ public class KKServerGUI extends JFrame {
 		
 	}
 	
+	/**
+	* <h1>Button Handler</h1>
+	* Inner class that handles button clicks
+	* 
+	* <p> In case server is started "Server Start" button is turned inactive
+	* Else the "Server Stop" buttons is inactive
+	* 
+	* @author  Radoslav Radoev
+	* @version %I%, %G%
+	* @since   02/25/2018
+	*/
 	class ButtonHandler implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startServer) {
 				
+				// if server is not active already, turn it on and start it
 				if (!server.isListening()) {
 					server.setListening(true);
 				}
 				
 				pool.execute(server);
 				
+				// If the server is still not running display the user an error message.
 				if (!server.isListening()) {
 	        		javax.swing.JOptionPane.showMessageDialog(null,
 	        				"Servet cannot be started", 
 	        				"Server error",
 	        				JOptionPane.ERROR_MESSAGE);
-				} else {
+				} else { // If the server is running, change the status label and toggle on/off buttons accordingly
 					statusLabel.setText("Server is running");	
 					startServer.setEnabled(false);
 					stopServer.setEnabled(true);
 					client.setEnabled(true);
 				}
 			}
+			// if server is going to be stopped, turn it off, update label,
+			// toggle buttons accordingly. Thread will not be shutdown in case
+			// server needs to be restart
 			else if (e.getSource() == stopServer) {
 				server.setListening(false);
 				statusLabel.setText("Server is stopped");
@@ -156,6 +181,10 @@ public class KKServerGUI extends JFrame {
 		
 	}
 	
+	/**
+	 * Method that returns the current executor service
+	 * @return an ExecutorService instance of the current thread pool
+	 */
 	public ExecutorService getExecutionThreadPool() {
 		return pool;
 	}
