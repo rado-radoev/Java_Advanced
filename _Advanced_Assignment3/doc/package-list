@@ -1,0 +1,6 @@
+com.knockknock.application
+com.knockknock.client
+com.knockknock.exceptions
+com.knockknock.message.reader
+com.knockknock.protocol
+com.knockknock.server
