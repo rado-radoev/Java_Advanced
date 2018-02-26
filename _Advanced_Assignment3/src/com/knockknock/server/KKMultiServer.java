@@ -6,6 +6,20 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.JOptionPane;
+
+/**
+* <h1>Knock Knock Server</h1>
+* Class that creates a Server Socket instance listening on a specific port.
+* Creates new thread for each connection. 
+* 
+* <p> Class can only be instantiated once. Multiple instances are not allowed.
+* 
+*
+* @author  Radoslav Radoev
+* @version %I%, %G%
+* @since   02/25/2018
+*/
 public class KKMultiServer implements Runnable {
     private boolean listening;
     private IOException thrownException;
@@ -21,6 +35,7 @@ public class KKMultiServer implements Runnable {
 		return Initializer.INSTANCE;
 	}
 	
+	// Start new server listening on specific port
     @Override
     public void run() {      
         try(ServerSocket serverSocket = new ServerSocket(KKServerConst.PORT.getValue())) { 
@@ -28,36 +43,45 @@ public class KKMultiServer implements Runnable {
 
         		pool = Executors.newCachedThreadPool();
         		
+        		// Listen for new connections and when new connection attempt is made, start communication
+        		// in separate thread
             while (isListening()) {
 	            	try {
 	            		pool.execute(new KKMultiServerThread(serverSocket.accept()));
 	            	} catch (SocketTimeoutException ste) { } 
             		catch (IOException ioe) {
-            			throwException(ioe);
+                		javax.swing.JOptionPane.showMessageDialog(null,
+                				"Server cannot accept new client connections", 
+                				"Server error",
+                				JOptionPane.ERROR_MESSAGE);
             		}
             }
             
+            // Gracefully shutdown server socket and close all opened client threads.
             serverSocket.close();
             pool.shutdownNow();
             
         } catch (IOException ioe) {
-        		setListening(false);
-            throwException(ioe);
+        		javax.swing.JOptionPane.showMessageDialog(null,
+        				"Servet cannot be started", 
+        				"Server error",
+        				JOptionPane.ERROR_MESSAGE);
         }
     }
     
-    private void throwException(IOException ioe) {
-    		this.thrownException = ioe;
-    }
-    
-    public synchronized IOException thrownException() {
-    		return thrownException;
-    }
-    
+    /**
+    * Method to set if server is listening for new connections or not
+    * @param listening boolean value enabling or disabling the server
+    * to listen for new connection
+    */
     public synchronized void setListening(Boolean listening) {
     	this.listening = listening;
     }
     
+    /**
+     * Method to return if server is listening or not for new connections
+     * @return boolean value showing if server is listening for new connections or not
+     */
     public synchronized boolean isListening() {
     	return listening;
     }

@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 * JTextArea.
 *
 * @author  Radoslav Radoev
-* @version 1.0
+* @version %I%, %G%
 * @since   02/25/2018
 */
 public class ReceiveMessage implements Runnable {

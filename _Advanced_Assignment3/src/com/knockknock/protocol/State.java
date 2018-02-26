@@ -1,5 +1,13 @@
 package com.knockknock.protocol;
 
+/**
+* <h1>Knock Knock Protocol States</h1>
+* Enum containing predefined server-client communication states
+*
+* @author  Radoslav Radoev
+* @version %I%, %G%
+* @since   02/25/2018
+*/
 public enum State {
 
 	WAITING (0),

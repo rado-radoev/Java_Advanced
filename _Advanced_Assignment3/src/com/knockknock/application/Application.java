@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 * connections and displays knock knock jokes. 
 *
 * @author  Radoslav Radoev
-* @version 1.0
+* @version %I%, %G%
 * @since   02/25/2018
 */
 public class Application {

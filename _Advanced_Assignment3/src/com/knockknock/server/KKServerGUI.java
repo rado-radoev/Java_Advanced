@@ -135,7 +135,10 @@ public class KKServerGUI extends JFrame {
 				pool.execute(server);
 				
 				if (!server.isListening()) {
-					new JOptionPane(server.thrownException().getMessage(), ERROR);
+	        		javax.swing.JOptionPane.showMessageDialog(null,
+	        				"Servet cannot be started", 
+	        				"Server error",
+	        				JOptionPane.ERROR_MESSAGE);
 				} else {
 					statusLabel.setText("Server is running");	
 					startServer.setEnabled(false);

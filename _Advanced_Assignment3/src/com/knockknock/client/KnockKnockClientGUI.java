@@ -17,7 +17,7 @@ import javax.swing.*;
 * and will wait for another message from the user. 
 *
 * @author  Radoslav Radoev
-* @version 1.0
+* @version %I%, %G%
 * @since   02/25/2018
 */
 public class KnockKnockClientGUI extends JFrame implements Runnable
@@ -71,7 +71,6 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
         
         Handler handler = new Handler();
         
-
         chatTextArea = new JTextArea(10, 10);
         chatTextArea.setEditable(false);
         chatTextArea.setLineWrap(true);
