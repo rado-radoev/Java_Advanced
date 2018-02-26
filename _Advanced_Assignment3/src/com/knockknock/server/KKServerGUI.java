@@ -161,6 +161,8 @@ public class KKServerGUI extends JFrame {
 	        				"Servet cannot be started", 
 	        				"Server error",
 	        				JOptionPane.ERROR_MESSAGE);
+					startServer.setEnabled(true);
+					stopServer.setEnabled(false);
 				} else { // If the server is running, change the status label and toggle on/off buttons accordingly
 					statusLabel.setText("Server is running");	
 					startServer.setEnabled(false);

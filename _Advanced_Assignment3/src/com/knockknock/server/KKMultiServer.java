@@ -8,6 +8,9 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
+import com.knockknock.exceptions.CustExcep;
+import com.knockknock.exceptions.ExceptionHandler;
+
 /**
 * <h1>Knock Knock Server</h1>
 * Class that creates a Server Socket instance listening on a specific port.
@@ -22,7 +25,6 @@ import javax.swing.JOptionPane;
 */
 public class KKMultiServer implements Runnable {
     private boolean listening;
-    private IOException thrownException;
     private ExecutorService pool;
     
     private KKMultiServer() { }
@@ -42,7 +44,7 @@ public class KKMultiServer implements Runnable {
         		serverSocket.setSoTimeout(KKServerConst.TIMEOUT.getValue());
 
         		pool = Executors.newCachedThreadPool();
-        		
+
         		// Listen for new connections and when new connection attempt is made, start communication
         		// in separate thread
             while (isListening()) {
@@ -63,7 +65,7 @@ public class KKMultiServer implements Runnable {
             
         } catch (IOException ioe) {
         		javax.swing.JOptionPane.showMessageDialog(null,
-        				"Servet cannot be started", 
+        				"Servet cannot be started. Port " + KKServerConst.PORT.getValue() + " may already be in use", 
         				"Server error",
         				JOptionPane.ERROR_MESSAGE);
         }
