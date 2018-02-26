@@ -23,7 +23,7 @@ public class MessageReader {
 	}
 
 	private final void getFilePath(ResponseFiles fileToGet) {
-		String packagePath = "/com/knockknock/messages";
+		String packagePath = "/com/knockknock/message";
 		
 		try {
 		if (fileToGet == ResponseFiles.CLUES)
@@ -31,8 +31,7 @@ public class MessageReader {
 		else if (fileToGet == ResponseFiles.ANSWERS)
 			file = new File(getClass().getResource(String.format("%s/answers.txt", packagePath)).getPath());
 		} catch (NullPointerException e) {
-			javax.swing.JOptionPane.showMessageDialog(null, "Jokes Files Missing", "File Missing", JOptionPane.ERROR_MESSAGE);
-			System.exit(1);
+			javax.swing.JOptionPane.showMessageDialog(null, "Jokes Files Missing", "File Missing", JOptionPane.ERROR_MESSAGE); 
 		}
 	}
 

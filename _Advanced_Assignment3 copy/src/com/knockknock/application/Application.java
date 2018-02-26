@@ -1,7 +1,7 @@
 package com.knockknock.application;
 
 import com.knockknock.message.reader.MessageLoader;
-import com.knockknock.server.KKServerGUI;
+import com.knockknock.server.KnockKnockServerGUI;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,7 +19,7 @@ public class Application {
 			@Override
 			public void run() {
 		
-				KKServerGUI gui = new KKServerGUI();
+				KnockKnockServerGUI gui = new KnockKnockServerGUI();
 
 				gui.addWindowListener(new WindowAdapter() {
 					@Override
