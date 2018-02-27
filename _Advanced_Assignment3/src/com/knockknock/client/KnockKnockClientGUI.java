@@ -1,6 +1,7 @@
 package com.knockknock.client;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.io.*;
@@ -90,7 +91,7 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
-        setSize(350, 250);
+        setSize(500, 300);
         setVisible(true); 
 
         // New listening thread started for each client 
@@ -104,7 +105,7 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
     	fromUser = userInputTextField.getText() + "\n";
         if (fromUser != null) 
         {
-            chatTextArea.append(fromUser);
+            chatTextArea.append("Client: " + fromUser);
             out.println(fromUser);
             userInputTextField.setText("");
         }

@@ -43,15 +43,16 @@ public class MessageReader {
 	 * @param fileToGet type of file to load as specified in the Enum class {@link #getFilePath(ResponseFiles)}
 	 */
 	private final void getFilePath(ResponseFiles fileToGet) {
-		String packagePath = "/com/knockknock/messages";
+		String cluesFile = "clues.txt";
+		String answersFile = "answers.txt";
 		
 		// Try to locate and get absolute path of either clues or answer files. If files do not exist
 		// an error is displayed to the user and application is closed.
 		try {
 		if (fileToGet == ResponseFiles.CLUES)
-			file = new File(getClass().getResource(String.format("%s/clues.txt", packagePath)).getPath());
-		else if (fileToGet == ResponseFiles.ANSWERS)
-			file = new File(getClass().getResource(String.format("%s/answers.txt", packagePath)).getPath());
+			file = new File(cluesFile);
+		else if (fileToGet == ResponseFiles.ANSWERS) 
+			file = new File(answersFile);
 		} catch (NullPointerException e) {
 			javax.swing.JOptionPane.showMessageDialog(null, "Jokes Files Missing", "File Missing", JOptionPane.ERROR_MESSAGE);
 			System.exit(1);

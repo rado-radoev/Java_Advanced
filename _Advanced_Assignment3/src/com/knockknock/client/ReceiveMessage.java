@@ -1,5 +1,6 @@
 package com.knockknock.client;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 
 /**
@@ -44,7 +45,7 @@ public class ReceiveMessage implements Runnable {
             String str = "Server : " + fromServer + "\n";
             chatTextArea.append(str);
             chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
-
+            
             if (fromServer.equals("Bye."))
                 break;
             }
