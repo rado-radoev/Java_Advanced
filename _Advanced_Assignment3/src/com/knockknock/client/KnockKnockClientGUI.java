@@ -8,7 +8,18 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.ExecutorService;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.Style;
 
 import com.knockknock.exceptions.ExceptionHandler;
 
@@ -39,6 +50,8 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
     private JButton sendButton;
     private JPanel bottomPanel;
     private PrintWriter out;
+    
+    JTextPane textPane = new JTextPane();
 
     /**
      * Method that initializes the client GUI and makes a connection to a local server
