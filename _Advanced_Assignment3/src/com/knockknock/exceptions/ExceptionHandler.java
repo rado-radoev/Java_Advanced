@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class ExceptionHandler {
 	
 	/**
-	 * Method to handle excceptions
+	 * Method to handle exceptions
 	 * @param exp the exception to handle
 	 */
 	public static void handleException(Exception exp) {
