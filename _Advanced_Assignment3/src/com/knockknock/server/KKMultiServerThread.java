@@ -2,6 +2,8 @@ package com.knockknock.server;
 
 import java.net.*;
 import javax.swing.JOptionPane;
+
+import com.knockknock.exceptions.ExceptionHandler;
 import com.knockknock.protocol.KnockKnockProtocol;
 import java.io.*;
 
@@ -40,10 +42,11 @@ public class KKMultiServerThread implements Runnable {
 		    socket.close();
 	
 		} catch (IOException e) {
-			javax.swing.JOptionPane.showMessageDialog(null, 
-    				"Error reading jokes", 
-    				"Reading error", 
-    				JOptionPane.ERROR_MESSAGE);
+			ExceptionHandler.handleException(e);
+//			javax.swing.JOptionPane.showMessageDialog(null, 
+//    				"Error reading jokes", 
+//    				"Reading error", 
+//    				JOptionPane.ERROR_MESSAGE);
 		}
     }
 }

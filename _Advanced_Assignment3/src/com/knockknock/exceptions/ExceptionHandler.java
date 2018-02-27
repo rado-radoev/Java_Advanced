@@ -22,6 +22,10 @@ public class ExceptionHandler {
 
 	}
 	
+	public static void handleException(String message) {
+		displayExceptionMessage(message);
+	}
+	
 	/**
 	 * Method to display exception message and cause in JOptionPane
 	 * @param exp the exception to handle
@@ -29,8 +33,18 @@ public class ExceptionHandler {
 	private static void displayExceptionMessage(Exception exp) {
 		javax.swing.JOptionPane.showMessageDialog(null, 
 				exp.getMessage(), 
-				exp.getCause().toString(), 
+				"Error", 
 				JOptionPane.ERROR_MESSAGE);
 	}
-
+	
+	/**
+	 * Method to display exception message with custom message
+	 * @param message the custom message to display
+	 */
+	private static void displayExceptionMessage(String message) {
+		javax.swing.JOptionPane.showMessageDialog(null, 
+				message, 
+				"Error", 
+				JOptionPane.ERROR_MESSAGE);
+	}
 }

@@ -3,6 +3,8 @@ package com.knockknock.client;
 import java.awt.Color;
 import java.io.BufferedReader;
 
+import com.knockknock.exceptions.ExceptionHandler;
+
 /**
 * <h1>Receive Message</h1>
 * Helper class that is listening for server messages and
@@ -52,7 +54,7 @@ public class ReceiveMessage implements Runnable {
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+        		ExceptionHandler.handleException(e);
         }
     }
 }

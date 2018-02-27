@@ -10,6 +10,8 @@ import java.util.concurrent.ExecutorService;
 
 import javax.swing.*;
 
+import com.knockknock.exceptions.ExceptionHandler;
+
 /**
 * <h1>Knock Knock Client GUI</h1>
 * Class that impelemnts the Graphical User Interface and the Knock Knock Client
@@ -39,7 +41,7 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
     private PrintWriter out;
 
     /**
-     * Method that initalizes the client GUI and makes a connection to a local server
+     * Method that initializes the client GUI and makes a connection to a local server
      */
     public void init() 
     {
@@ -53,16 +55,18 @@ public class KnockKnockClientGUI extends JFrame implements Runnable
             out = new PrintWriter(kkSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
         } catch (UnknownHostException e) {
-        		JOptionPane.showMessageDialog(null, 
-        				"Don't know about host: " + hostName, 
-        				"File Missing", 
-        				JOptionPane.ERROR_MESSAGE);
+        		ExceptionHandler.handleException(e);
+//        		JOptionPane.showMessageDialog(null, 
+//        				"Don't know about host: " + hostName, 
+//        				"File Missing", 
+//        				JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (IOException e) {
-    			JOptionPane.showMessageDialog(null, 
-    				"Couldn't get I/O for the connection to: " + hostName, 
-    				"File Missing", 
-    				JOptionPane.ERROR_MESSAGE);
+        		ExceptionHandler.handleException(e);
+//    			JOptionPane.showMessageDialog(null, 
+//    				"Couldn't get I/O for the connection to: " + hostName, 
+//    				"File Missing", 
+//    				JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 

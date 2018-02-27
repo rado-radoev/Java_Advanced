@@ -54,7 +54,8 @@ public class MessageReader {
 		else if (fileToGet == ResponseFiles.ANSWERS) 
 			file = new File(answersFile);
 		} catch (NullPointerException e) {
-			javax.swing.JOptionPane.showMessageDialog(null, "Jokes Files Missing", "File Missing", JOptionPane.ERROR_MESSAGE);
+			ExceptionHandler.handleException(e);
+			//javax.swing.JOptionPane.showMessageDialog(null, "Jokes Files Missing", "File Missing", JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
 	}
@@ -80,7 +81,8 @@ public class MessageReader {
 			}
 			
 		} catch (IOException e) {
-			javax.swing.JOptionPane.showMessageDialog(null, "Cannot read jokes file(s)", "Read Error", JOptionPane.ERROR_MESSAGE);
+			ExceptionHandler.handleException(e);
+			//javax.swing.JOptionPane.showMessageDialog(null, "Cannot read jokes file(s)", "Read Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return output;

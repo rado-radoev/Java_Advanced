@@ -51,11 +51,12 @@ public class KKMultiServer implements Runnable {
 	            	try {
 	            		pool.execute(new KKMultiServerThread(serverSocket.accept()));
 	            	} catch (SocketTimeoutException ste) { } 
-            		catch (IOException ioe) {
-                		javax.swing.JOptionPane.showMessageDialog(null,
-                				"Server cannot accept new client connections", 
-                				"Server error",
-                				JOptionPane.ERROR_MESSAGE);
+            		catch (IOException e) {
+            			ExceptionHandler.handleException(e);
+//                		javax.swing.JOptionPane.showMessageDialog(null,
+//                				"Server cannot accept new client connections", 
+//                				"Server error",
+//                				JOptionPane.ERROR_MESSAGE);
             		}
             }
             
@@ -63,11 +64,12 @@ public class KKMultiServer implements Runnable {
             serverSocket.close();
             pool.shutdownNow();
             
-        } catch (IOException ioe) {
-        		javax.swing.JOptionPane.showMessageDialog(null,
-        				"Servet cannot be started. Port " + KKServerConst.PORT.getValue() + " may already be in use", 
-        				"Server error",
-        				JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
+        		ExceptionHandler.handleException(e);
+//        		javax.swing.JOptionPane.showMessageDialog(null,
+//        				"Servet cannot be started. Port " + KKServerConst.PORT.getValue() + " may already be in use", 
+//        				"Server error",
+//        				JOptionPane.ERROR_MESSAGE);
         }
     }
     
